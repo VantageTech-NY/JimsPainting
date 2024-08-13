@@ -11069,7 +11069,7 @@ body {
   height: auto;
   min-height: 35rem;
   padding: 15rem 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url("../assets/img/bg-masthead.jpg");
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url("../assets/img/jqp-hero.png");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
@@ -11111,15 +11111,21 @@ body {
   }
 }
 
-.about-section {
-  padding-top: 10rem;
-  background: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.9) 75%, rgba(0, 0, 0, 0.8) 100%);
+.about-us-section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
-.about-section p {
+
+.our-work {
+  padding-top: 5rem;
+  background: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.9) 75%, rgba(0, 0, 0, 0.8) 100%);
+  padding-bottom: 3rem;
+}
+.our-work p {
   margin-bottom: 5rem;
 }
 
-.projects-section {
+/* .projects-section {
   padding: 10rem 0;
 }
 .projects-section .featured-text {
@@ -11138,6 +11144,19 @@ body {
 @media (min-width: 992px) {
   .projects-section .project-text {
     padding: 5rem;
+  }
+} */
+
+.projects-section .project-text,
+.projects-section .featured-text {
+  padding: 4rem 2rem; /* More uniform padding */
+}
+
+@media (min-width: 992px) {
+  .projects-section .featured-text,
+  .projects-section .project-text {
+    padding: 4rem 2rem; /* Consistent padding for large screens */
+    border-left: 0.5rem solid #64a19d; /* Apply border uniformly */
   }
 }
 
