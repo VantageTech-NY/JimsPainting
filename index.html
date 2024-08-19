@@ -229,6 +229,38 @@
                         </div>
                     </div>
                 </div>
+                <div class="row gx-4 gx-lg-5 justify-content-center mt-4">
+                    <div class="col-md-10">
+                        <div class="card py-4 h-100">
+                            <div class="card-body">
+                                <h4 class="text-center mb-4">Get a Quote</h4>
+                                <form action="https://formsubmit.co/your@email.com" method="POST">
+                                    <!-- Honeypot to block spam -->
+                                    <input type="text" name="_honey" style="display:none">
+                                    <!-- Custom subject for the email -->
+                                    <input type="hidden" name="_subject" value="New Quote Request from Jim's Quality Painting">
+                                    <!-- Redirect after submission
+                                    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you"> -->
+                                    <div class="form-group mb-3">
+                                        <label for="name">Your Name</label>
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="email">Your Email</label>
+                                        <input type="email" name="email" id="email" class="form-control" placeholder="Your Email" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="message">Your Message</label>
+                                        <textarea name="message" id="message" class="form-control" placeholder="Your Message" rows="5" required></textarea>
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <button type="submit" class="btn btn-primary" style="padding: 12px 24px; margin-top: 15px;">Send</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="social d-flex justify-content-center">
                     <a class="mx-2" href="https://www.facebook.com/yourprofile" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a class="mx-2" href="https://www.instagram.com/yourprofile" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
