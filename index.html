@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Jim's Quality Painting delivers expert residential and commercial painting in Central Connecticut. Enjoy flawless results and exceptional service for your home or business.">
         <title>Central Connecticut Painting Services | Jim's Quality Painting</title>
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="canonical" href="https://jimspaint.com/">
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -19,7 +19,7 @@
         <!-- Open Graph meta tags -->
         <meta property="og:title" content="Jim's Quality Painting" />
         <meta property="og:description" content="High-quality painting services in Central Connecticut. Specializing in residential, commercial, and exterior projects." />
-        <meta property="og:image" content="https://jimspaint.com/assets/img/jqp.png" />
+        <meta property="og:image" content="https://jimspaint.com/assets/img/jqp-open-graph.png" />
         <meta property="og:url" content="https://jimspaint.com/" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Jim's Quality Painting" />
@@ -29,8 +29,6 @@
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
         <link rel="manifest" href="/site.webmanifest">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="/mstile-150x150.png">
         <meta name="theme-color" content="#ffffff">
 
     </head>
@@ -244,13 +242,10 @@
                         <div class="card py-4 h-100">
                             <div class="card-body">
                                 <h3 class="text-center mb-4">Get a Quote</h3>
-                                <form action="https://formsubmit.co/your@email.com" method="POST">
-                                    <!-- Honeypot to block spam -->
+                                <form action="https://formsubmit.co/jim@jimspaint.com" method="POST">
                                     <input type="text" name="_honey" style="display:none">
-                                    <!-- Custom subject for the email -->
                                     <input type="hidden" name="_subject" value="New Quote Request from Jim's Quality Painting">
-                                    <!-- Redirect after submission
-                                    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you"> -->
+                                    <input type="hidden" name="_next" value="https://jimspaint.com/thanks.html">
                                     <div class="form-group mb-3">
                                         <label for="name">Your Name</label>
                                         <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" required>
@@ -258,6 +253,10 @@
                                     <div class="form-group mb-3">
                                         <label for="email">Your Email</label>
                                         <input type="email" name="email" id="email" class="form-control" placeholder="Your Email" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="phone">Your Phone (optional)</label>
+                                        <input type="tel" name="phone" id="phone" class="form-control" placeholder="(860) 555-1234">
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="message">Your Message</label>
@@ -272,9 +271,7 @@
                     </div>
                 </div>
                 <div class="social d-flex justify-content-center">
-                    <a class="mx-2" href="https://www.facebook.com/yourprofile" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a class="mx-2" href="https://www.instagram.com/yourprofile" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a class="mx-2" href="https://maps.app.goo.gl/o1sANcZx5fbq9ogX8" target="_blank" aria-label="Google Maps"><i class="fas fa-map-marker-alt"></i></a>
+                    <a class="mx-2" href="https://maps.app.goo.gl/o1sANcZx5fbq9ogX8" target="_blank" rel="noopener" aria-label="Google Maps"><i class="fas fa-map-marker-alt"></i></a>
                 </div>
             </div>
         </section>
