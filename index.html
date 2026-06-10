@@ -9,17 +9,20 @@
         <meta name="description" content="Jim's Quality Painting delivers expert residential and commercial painting in Central Connecticut. Enjoy flawless results and exceptional service for your home or business.">
         <title>Central Connecticut Painting Services | Jim's Quality Painting</title>
         <link rel="canonical" href="https://jimspaint.com/">
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Varela+Round&display=swap" rel="stylesheet" />
+        <!-- Preload masthead background image (above-the-fold) -->
+        <link rel="preload" as="image" href="assets/img/jqp-hero.webp" fetchpriority="high">
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/styles.min.css" rel="stylesheet" />
         <!-- Open Graph meta tags -->
         <meta property="og:title" content="Jim's Quality Painting" />
         <meta property="og:description" content="High-quality painting services in Central Connecticut. Specializing in residential, commercial, and exterior projects." />
-        <meta property="og:image" content="https://jimspaint.com/assets/img/jqp-open-graph.png" />
+        <meta property="og:image" content="https://jimspaint.com/assets/img/jqp-open-graph.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:url" content="https://jimspaint.com/" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Jim's Quality Painting" />
@@ -39,7 +42,7 @@
                 <a class="navbar-brand" href="#page-top">Jim's Quality Painting</a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
-                    <i class="fas fa-bars"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="1em" height="1em" aria-hidden="true" fill="currentColor"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
@@ -85,7 +88,7 @@
                     </div>
                 </div>
                 <!-- Featured Image-->
-                <img class="img-fluid mt-4" src="assets/img/jqp-hero-2.jpg" alt="Jim's Quality Painting team working on a commercial building exterior" />
+                <img class="img-fluid mt-4" src="assets/img/jqp-hero-2.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Jim's Quality Painting team working on a commercial building exterior" />
             </div>
         </section>
         <!-- Projects-->
@@ -93,7 +96,7 @@
             <div class="container px-4 px-lg-5">
                 <!-- Featured Project Row-->
                 <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
-                    <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="assets/img/jqp-hero.png" alt="Jim's Quality Painting Project" /></div>
+                    <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="assets/img/jqp-hero.webp" width="1280" height="647" loading="lazy" decoding="async" alt="Jim's Quality Painting Project" /></div>
                     <div class="col-xl-4 col-lg-5">
                         <div class="featured-text text-center text-lg-left">
                             <h4>Elegant Finishes</h4>
@@ -104,7 +107,7 @@
                 <!-- Project Rows-->
                 <!-- Project One: Residential-->
                 <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/jqp-projects-res.png" alt="Residential home with freshly painted exterior and modern color scheme" /></div>
+                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/jqp-projects-res.webp" width="640" height="480" loading="lazy" decoding="async" alt="Residential home with freshly painted exterior and modern color scheme" /></div>
                     <div class="col-lg-6">
                         <div class="bg-black text-center h-100 project">
                             <div class="d-flex h-100">
@@ -118,7 +121,7 @@
                 </div>
                 <!-- Project Two: Interior-->
                 <div class="row gx-0 justify-content-center">
-                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/jqp-projects-int.png" alt="Interior painting project showcasing a stylish, contemporary living room" /></div>
+                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/jqp-projects-int.webp" width="640" height="480" loading="lazy" decoding="async" alt="Interior painting project showcasing a stylish, contemporary living room" /></div>
                     <div class="col-lg-6 order-lg-first">
                         <div class="bg-black text-center h-100 project">
                             <div class="d-flex h-100">
@@ -132,7 +135,7 @@
                 </div>
                 <!-- Project Three: Exterior-->
                 <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/jqp-projects-ext.png" alt="Exterior painting project with a vibrant, durable finish on a residential home" /></div>
+                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/jqp-projects-ext.webp" width="640" height="480" loading="lazy" decoding="async" alt="Exterior painting project with a vibrant, durable finish on a residential home" /></div>
                     <div class="col-lg-6">
                         <div class="bg-black text-center h-100 project">
                             <div class="d-flex h-100">
@@ -146,7 +149,7 @@
                 </div>
                 <!-- Project Four: Deck and Arbors-->
                 <div class="row gx-0 justify-content-center">
-                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/jqp-projects-decks.jpg" alt="Freshly painted deck and arbor with a rich, protective finish" /></div>
+                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/jqp-projects-decks.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Freshly painted deck and arbor with a rich, protective finish" /></div>
                     <div class="col-lg-6 order-lg-first">
                         <div class="bg-black text-center h-100 project">
                             <div class="d-flex h-100">
@@ -160,7 +163,7 @@
                 </div>
                 <!-- Project Five: Commercial | Business-->
                 <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/jqp-projects-bus.png" alt="Commercial building with a professional, clean paint job" /></div>
+                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/jqp-projects-bus.webp" width="640" height="480" loading="lazy" decoding="async" alt="Commercial building with a professional, clean paint job" /></div>
                     <div class="col-lg-6">
                         <div class="bg-black text-center h-100 project">
                             <div class="d-flex h-100">
@@ -180,7 +183,7 @@
                 <div class="row gx-4 gx-lg-6 justify-content-center align-items-center">
                     <div class="col-lg-4">
                         <!-- Placeholder for Photo -->
-                        <img class="img-fluid" src="assets/img/jqp-about-us.png" alt="About Us Photo" />
+                        <img class="img-fluid" src="assets/img/jqp-about-us.webp" width="800" height="600" loading="lazy" decoding="async" alt="About Us Photo" />
                     </div>
                     <div class="col-lg-8">
                         <h2 class="mb-4">About Us</h2>
@@ -198,7 +201,7 @@
                     <div class="col-md-5 mb-3 mb-md-0">
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
-                                <i class="fas fa-envelope text-primary mb-2"></i>
+                                <svg class="text-primary mb-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" aria-hidden="true" fill="currentColor"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>
                                 <h4 class="text-uppercase m-0">Email</h4>
                                 <hr class="my-4 mx-auto" />
                                 <div class="small text-black-50">
@@ -219,7 +222,7 @@
                     <div class="col-md-5 mb-3 mb-md-0">
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
-                                <i class="fas fa-mobile-alt text-primary mb-2"></i>
+                                <svg class="text-primary mb-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="1em" height="1em" aria-hidden="true" fill="currentColor"><path d="M16 64C16 28.7 44.7 0 80 0H304c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H80c-35.3 0-64-28.7-64-64V64zM224 448a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM304 64H80V384H304V64z"/></svg>
                                 <h4 class="text-uppercase m-0">Phone</h4>
                                 <hr class="my-4 mx-auto" />
                                 <div class="small text-black-50">
@@ -271,17 +274,15 @@
                     </div>
                 </div>
                 <div class="social d-flex justify-content-center">
-                    <a class="mx-2" href="https://maps.app.goo.gl/o1sANcZx5fbq9ogX8" target="_blank" rel="noopener" aria-label="Google Maps"><i class="fas fa-map-marker-alt"></i></a>
+                    <a class="mx-2" href="https://maps.app.goo.gl/o1sANcZx5fbq9ogX8" target="_blank" rel="noopener" aria-label="Google Maps"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="1em" height="1em" aria-hidden="true" fill="currentColor"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg></a>
                 </div>
             </div>
         </section>
         <!-- Footer-->
         <footer class="footer bg-black small text-center text-white-50"><div class="container px-4 px-lg-5">Copyright &copy; Jim's Quality Painting 2024</div></footer>
         <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
-        <!-- SB Forms JS-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
 </html>
