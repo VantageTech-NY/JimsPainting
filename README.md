@@ -47,6 +47,7 @@ Most edits happen in `index.html`. Common targets:
 | About Us copy              | `<section id="about-us">` → "About Us" col                             |
 | Service-area town list     | `<section id="about-us">` → "Service Area" row (also update JSON-LD)   |
 | Testimonials               | `<section id="about-us">` → "What Our Clients Say" cards               |
+| FAQ                        | `<section id="faq">` → also update the `FAQPage` JSON-LD in `<head>` (and recompute the CSP hash) |
 | Phone number               | `js/scripts.js` (`phoneLink` block) — change both `tel:` digits and display string |
 | Email                      | `js/scripts.js` (`emailLink` block) — change `user` / `domain` vars    |
 | Footer / copyright         | Year is dynamic (set by JS). Brand name is hard-coded in footer.       |
@@ -119,25 +120,25 @@ Configured in `_headers` (Cloudflare Pages syntax). Includes:
 - `Strict-Transport-Security`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`.
 - `Content-Security-Policy` (strict — no `'unsafe-inline'` for scripts).
 
-### CSP hash — important when editing JSON-LD
+### CSP hashes — important when editing JSON-LD
 
-The CSP allows exactly one inline script: the JSON-LD block in `index.html`. It's permitted via a SHA-256 hash in the `script-src` directive.
+The CSP allows two inline scripts: the `HousePainter` JSON-LD and the `FAQPage` JSON-LD in `index.html` head. Each is permitted via its own SHA-256 hash in the `script-src` directive.
 
-If you edit the JSON-LD content **at all** (even whitespace), recompute the hash:
+If you edit **either** JSON-LD block (even whitespace), recompute both hashes — the order in `_headers` matters less than getting the exact bytes right:
 
 ```bash
 python3 -c "
-import re, hashlib, base64
+import re, hashlib, base64, json
 html = open('index.html').read()
-m = re.search(r'<script type=\"application/ld\+json\">(.*?)</script>', html, re.DOTALL)
-digest = hashlib.sha256(m.group(1).encode('utf-8')).digest()
-print('sha256-' + base64.b64encode(digest).decode())
+for i, b in enumerate(re.findall(r'<script type=\"application/ld\+json\">(.*?)</script>', html, re.DOTALL), 1):
+    h = base64.b64encode(hashlib.sha256(b.encode('utf-8')).digest()).decode()
+    print(f'#{i} {json.loads(b)[\"@type\"]:14s} sha256-{h}')
 "
 ```
 
-Then paste the result into `_headers` replacing the existing `'sha256-...'` value inside `script-src`.
+Paste both `sha256-...` values into `_headers`, replacing the existing ones inside `script-src`.
 
-If you forget, the browser blocks the JSON-LD and Google stops seeing local-business data — visible in DevTools as a CSP violation in the console.
+If you forget, the browser blocks the affected JSON-LD and Google / AI crawlers stop seeing it — visible in DevTools as a CSP violation in the console.
 
 ### Adding new external resources
 
