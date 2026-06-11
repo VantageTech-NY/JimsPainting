@@ -56,4 +56,19 @@ window.addEventListener('DOMContentLoaded', event => {
         copyrightYear.textContent = new Date().getFullYear();
     }
 
+    const emailLink = document.getElementById('email-link');
+    if (emailLink) {
+        const user = 'jim';
+        const domain = 'jimspaint.com';
+        emailLink.href = 'mailto:' + user + '@' + domain;
+        emailLink.textContent = user + '@' + domain;
+    }
+
+    const phoneLink = document.getElementById('phone-link');
+    if (phoneLink) {
+        const number = '+18609779536';
+        phoneLink.href = 'tel:' + number;
+        phoneLink.textContent = '(860) 977-9536';
+    }
+
 });
