@@ -1,10 +1,11 @@
 /*
   X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer-when-downgrade
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   X-Robots-Tag: all
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'sha256-sUC95xGb/RpO8r6w7mnjAszeo5hlFF8gxyl89CcArjE='; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; form-action 'self' https://formsubmit.co; frame-ancestors 'none'; base-uri 'self'
 
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
