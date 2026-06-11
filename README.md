@@ -154,6 +154,16 @@ The CSP whitelist is narrow. If you add a new third-party (analytics, embedded m
 
 ---
 
+## Analytics
+
+Cloudflare Web Analytics is enabled at the Pages-project level (Cloudflare dashboard → Pages → jimspaint.com → Settings → Web Analytics). Cloudflare auto-injects the beacon script (`https://static.cloudflareinsights.com/beacon.min.js`) into every served page on deploy — no script tag in this repo.
+
+The CSP in `_headers` already whitelists the script source (`script-src https://static.cloudflareinsights.com`) and the beacon POST target (`connect-src https://cloudflareinsights.com`). If Cloudflare ever changes the host or adds another endpoint, look in DevTools Console for the CSP violation and update those directives.
+
+Cloudflare Web Analytics is cookieless and doesn't require a consent banner.
+
+---
+
 ## Caching headers
 
 Also in `_headers`:
