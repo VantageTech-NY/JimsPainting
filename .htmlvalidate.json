@@ -1,0 +1,14 @@
+{
+  "extends": ["html-validate:standard"],
+  "rules": {
+    "no-inline-style": "off",
+    "void-style": "off",
+    "no-trailing-whitespace": "off",
+    "wcag/h30": "warn",
+    "wcag/h32": "warn",
+    "wcag/h36": "warn",
+    "wcag/h37": "warn",
+    "wcag/h67": "warn",
+    "wcag/h71": "warn"
+  }
+}
