@@ -1,6 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import { BUSINESS, NAV } from "../consts";
 import PhoneIcon from "./PhoneIcon.astro";
+import logo from "../assets/logo.jpg";
 
 // Highlight the current top-level section.
 const path = Astro.url.pathname;
@@ -12,7 +14,10 @@ const isActive = (href: string) =>
 
 <header class="site-header">
   <div class="header-inner container">
-    <a class="brand" href="/">{BUSINESS.name}</a>
+    <a class="brand" href="/">
+      <Image class="brand-logo" src={logo} alt="" width={92} height={92} loading="eager" />
+      <span>{BUSINESS.name}</span>
+    </a>
 
     <button
       class="nav-burger"

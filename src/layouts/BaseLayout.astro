@@ -1,5 +1,4 @@
 ---
-import { getImage } from "astro:assets";
 import "@fontsource-variable/bricolage-grotesque";
 import "@fontsource-variable/hanken-grotesk";
 import "../styles/global.css";
@@ -9,7 +8,6 @@ import "../styles/global.css";
 import bricolageFont from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import shareSource from "../assets/photos/hero.png";
 import { BUSINESS, IS_DEMO, SERVICES, SERVICE_TOWNS } from "../consts";
 
 interface Props {
@@ -30,16 +28,8 @@ const fullTitle = title ? `${title} | ${BUSINESS.name}` : BUSINESS.name;
 // one-variable demo->prod flip carries through here (plan2.md 1.2).
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
-// Default share image — a 1200x630 crop of the hero, generated at build time.
-const share = await getImage({
-  src: shareSource,
-  width: 1200,
-  height: 630,
-  format: "jpg",
-});
-const ogImageUrl = ogImage
-  ? new URL(ogImage, Astro.site).href
-  : new URL(share.src, Astro.site).href;
+// Default share image — the branded 1200x630 OG image in public/.
+const ogImageUrl = new URL(ogImage ?? "/og.jpg", Astro.site).href;
 
 // Site-wide LocalBusiness (HousePainter) schema (plan2.md 3.1 / 4). Inline
 // JSON-LD is data, not executable, so it is allowed under CSP script-src 'self'.

@@ -51,8 +51,18 @@ const description =
 ---
 
 <BaseLayout title="" description={description}>
-  {/* ---------- Hero ---------- */}
+  {/* ---------- Hero (full-bleed photo) ---------- */}
   <section class="hero">
+    <Image
+      class="hero-bg"
+      src={hero}
+      alt="Colonial home in Central Connecticut after refinishing by Jim's Quality Painting"
+      widths={[768, 1280, 1920]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hero-scrim"></div>
     <div class="hero-inner container">
       <div class="stack-l">
         <span class="chip">Central Connecticut</span>
@@ -62,8 +72,8 @@ const description =
           Connecticut for over 20 years — clean lines, honest quotes, no surprises.
         </p>
         <div class="hero-actions">
-          <a class="btn btn--primary" href="/contact/">Get a free quote</a>
-          <a class="btn btn--secondary" href={BUSINESS.phoneHref}
+          <a class="btn btn--on-teal" href="/contact/">Get a free quote</a>
+          <a class="btn btn--ghost" href={BUSINESS.phoneHref}
             >Call {BUSINESS.phone}</a
           >
         </div>
@@ -71,17 +81,6 @@ const description =
           Licensed &amp; insured · {BUSINESS.licenseLabel} #{BUSINESS.licenseNumber} ·
           {PAINT_BRANDS.join(" & ")} paints
         </p>
-      </div>
-
-      <div class="hero-media">
-        <Image
-          src={hero}
-          alt="Colonial home in Central Connecticut after refinishing by Jim's Quality Painting"
-          widths={[480, 800, 1200]}
-          sizes="(max-width: 52rem) 100vw, 600px"
-          loading="eager"
-          fetchpriority="high"
-        />
       </div>
     </div>
   </section>
