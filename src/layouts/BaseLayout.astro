@@ -3,6 +3,10 @@ import { getImage } from "astro:assets";
 import "@fontsource-variable/bricolage-grotesque";
 import "@fontsource-variable/hanken-grotesk";
 import "../styles/global.css";
+// Preload only the display font (drives the large headings — the CLS-critical
+// element). Body font keeps font-display:swap. Preloading both starved the LCP
+// image on throttled mobile. Same hashed URL the @font-face requests.
+import bricolageFont from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import shareSource from "../assets/photos/hero.png";
@@ -85,6 +89,8 @@ const businessSchema = {
     <meta name="description" content={description} />
     <meta name="theme-color" content="#14424e" />
     <link rel="canonical" href={canonical} />
+
+    <link rel="preload" href={bricolageFont} as="font" type="font/woff2" crossorigin />
 
     {/* Demo gating (plan2.md 0.2) + per-page opt-out (e.g. /thanks/). */}
     {(IS_DEMO || noindex) && <meta name="robots" content="noindex, nofollow" />}
