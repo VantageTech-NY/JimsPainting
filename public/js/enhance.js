@@ -15,6 +15,27 @@
     });
   }
 
+  // Home: transparent header while at the very top of the hero, solid once
+  // scrolled (so the nav stays readable over the lighter content below).
+  if (header && document.body.classList.contains("hero-page")) {
+    var ticking = false;
+    var sync = function () {
+      header.classList.toggle("at-top", window.scrollY < 24);
+      ticking = false;
+    };
+    sync();
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(sync);
+        }
+      },
+      { passive: true },
+    );
+  }
+
   // Scroll reveal (skips work entirely when reduced motion is requested)
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var items = Array.prototype.slice.call(

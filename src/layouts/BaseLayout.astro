@@ -18,9 +18,17 @@ interface Props {
   ogImage?: string;
   /** Force noindex even on prod (e.g. /thanks/, /404). */
   noindex?: boolean;
+  /** Overlay a transparent header on a full-bleed hero (home). */
+  heroHeader?: boolean;
 }
 
-const { title, description = BUSINESS.tagline, ogImage, noindex = false } = Astro.props;
+const {
+  title,
+  description = BUSINESS.tagline,
+  ogImage,
+  noindex = false,
+  heroHeader = false,
+} = Astro.props;
 
 const fullTitle = title ? `${title} | ${BUSINESS.name}` : BUSINESS.name;
 
@@ -108,7 +116,7 @@ const businessSchema = {
     />
     <slot name="head" />
   </head>
-  <body>
+  <body class={heroHeader ? "hero-page" : undefined}>
     <Header />
     <main id="main">
       <slot />
