@@ -1,0 +1,38 @@
+---
+// Inline SVG icons only — no icon fonts (plan2.md 2.2). Sized in em, inherits
+// color via currentColor. Add new glyphs to the map as needed.
+interface Props {
+  name: keyof typeof icons;
+  class?: string;
+}
+
+const icons = {
+  "shield-check":
+    '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 11 2 2 4-4"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  droplet: '<path d="M12 2.7s6 6.4 6 10.3a6 6 0 0 1-12 0C6 9.1 12 2.7 12 2.7z"/>',
+  "check-circle":
+    '<circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',
+  "map-pin":
+    '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="2.8"/>',
+  "arrow-right": '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
+} as const;
+
+const { name, class: className } = Astro.props;
+const inner = icons[name] ?? "";
+---
+
+<svg
+  class={className}
+  width="1em"
+  height="1em"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  set:html={inner}
+></svg>

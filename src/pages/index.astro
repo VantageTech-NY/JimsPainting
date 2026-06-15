@@ -1,13 +1,56 @@
 ---
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { BUSINESS, PAINT_BRANDS, SERVICES, TESTIMONIALS } from "../consts";
+import Icon from "../components/Icon.astro";
+import {
+  BUSINESS,
+  PAINT_BRANDS,
+  SERVICES,
+  SERVICE_TOWNS,
+  TESTIMONIALS,
+} from "../consts";
 import hero from "../assets/photos/hero.png";
+import workLargeHome from "../assets/photos/large-home-after.jpg";
+import workVictorian from "../assets/photos/victorian-home-front-after.jpeg";
+import workCabinets from "../assets/photos/kitchen-cabinets-wide-after.jpg";
+import workPorch from "../assets/photos/front-porch-after.jpeg";
 
-// PLACEHOLDER layout — design-system showcase. Real Home content is Phase 6 step 3.
+// DRAFT copy — owner sign-off pending (plan2.md 5.7).
+const values = [
+  {
+    icon: "shield-check" as const,
+    title: "Licensed & insured",
+    body: `${BUSINESS.licenseLabel} #${BUSINESS.licenseNumber}, fully insured. The paperwork is in order before we ever pick up a brush.`,
+  },
+  {
+    icon: "clock" as const,
+    title: "20+ years on the job",
+    body: "Two decades painting Central Connecticut homes and businesses — and most of our work comes from referrals.",
+  },
+  {
+    icon: "droplet" as const,
+    title: "Quality paint, always",
+    body: `We use ${PAINT_BRANDS.join(" and ")} — no bargain substitutes that fade or peel in a season.`,
+  },
+  {
+    icon: "check-circle" as const,
+    title: "Free, honest quotes",
+    body: "We walk the space, talk through what you want, and give you a clear price. No pressure, no surprises.",
+  },
+];
+
+const work = [
+  { img: workLargeHome, alt: "A two-story home after a full exterior repaint", cap: "Full exterior repaint" },
+  { img: workVictorian, alt: "A Victorian home repainted in a period color scheme", cap: "Victorian, period colors" },
+  { img: workCabinets, alt: "Kitchen cabinets after refinishing", cap: "Cabinet refinishing" },
+  { img: workPorch, alt: "A front porch after being refinished", cap: "Front porch refinish" },
+];
+
+const description =
+  "Licensed, insured painting in Central Connecticut — interior, exterior, cabinets, decks, and board & batten. Over 20 years. Free quotes.";
 ---
 
-<BaseLayout title="" description={BUSINESS.tagline}>
+<BaseLayout title="" description={description}>
   {/* ---------- Hero ---------- */}
   <section class="hero">
     <div class="hero-inner container">
@@ -37,12 +80,34 @@ import hero from "../assets/photos/hero.png";
           widths={[480, 800, 1200]}
           sizes="(max-width: 52rem) 100vw, 600px"
           loading="eager"
+          fetchpriority="high"
         />
       </div>
     </div>
   </section>
 
-  {/* ---------- Services preview (fan-deck cards) ---------- */}
+  {/* ---------- Why Jim ---------- */}
+  <section class="section">
+    <div class="container stack-l">
+      <div class="eyebrow-gap" data-reveal>
+        <span class="chip">Why Jim's</span>
+        <h2>A painter you can actually count on.</h2>
+      </div>
+      <div class="value-grid reveal-stagger">
+        {
+          values.map((v) => (
+            <div class="value-item" data-reveal>
+              <span class="icon-badge"><Icon name={v.icon} /></span>
+              <h3>{v.title}</h3>
+              <p>{v.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ---------- Services ---------- */}
   <section class="section section--tint">
     <div class="container stack-l">
       <div class="eyebrow-gap" data-reveal>
@@ -52,18 +117,51 @@ import hero from "../assets/photos/hero.png";
       <div class="card-grid reveal-stagger">
         {
           SERVICES.map((s) => (
-            <article class="card stack" data-reveal>
+            <a class="card stack" href={`/services/${s.slug}/`} data-reveal>
               <h3>{s.title}</h3>
               <p>{s.blurb}</p>
-            </article>
+              <span class="card-more">Learn more <Icon name="arrow-right" /></span>
+            </a>
           ))
         }
       </div>
+      <p data-reveal>
+        <a href="/services/">View all services →</a>
+      </p>
+    </div>
+  </section>
+
+  {/* ---------- Recent work ---------- */}
+  <section class="section">
+    <div class="container stack-l">
+      <div class="eyebrow-gap" data-reveal>
+        <span class="chip">Recent work</span>
+        <h2>Real homes, real Connecticut.</h2>
+      </div>
+      <div class="work-grid reveal-stagger">
+        {
+          work.map((w) => (
+            <figure class="work-item" data-reveal>
+              <Image
+                src={w.img}
+                alt={w.alt}
+                widths={[320, 640]}
+                sizes="(max-width: 52rem) 50vw, 280px"
+                loading="lazy"
+              />
+              <figcaption class="work-cap">{w.cap}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+      <p data-reveal>
+        <a href="/gallery/">See more projects →</a>
+      </p>
     </div>
   </section>
 
   {/* ---------- Testimonials (real Google reviews) ---------- */}
-  <section class="section">
+  <section class="section section--tint">
     <div class="container stack-l">
       <div class="eyebrow-gap" data-reveal>
         <span class="chip">What clients say</span>
@@ -84,6 +182,24 @@ import hero from "../assets/photos/hero.png";
           Read more on Google →
         </a>
       </p>
+    </div>
+  </section>
+
+  {/* ---------- Service area ---------- */}
+  <section class="section">
+    <div class="container stack-l">
+      <div class="eyebrow-gap" data-reveal>
+        <span class="chip">Service area</span>
+        <h2>Serving Central Connecticut.</h2>
+        <p>
+          We work throughout Central Connecticut, including these towns. Not sure
+          if we cover yours? <a href={BUSINESS.phoneHref}>Give us a call</a> — we
+          probably do.
+        </p>
+      </div>
+      <ul class="town-list" data-reveal>
+        {SERVICE_TOWNS.map((town) => <li class="town">{town}</li>)}
+      </ul>
     </div>
   </section>
 
