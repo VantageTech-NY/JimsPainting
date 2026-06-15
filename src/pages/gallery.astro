@@ -1,0 +1,74 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BeforeAfter from "../components/BeforeAfter.astro";
+import { BUSINESS } from "../consts";
+import { GALLERY, GALLERY_FILTERS } from "../data/gallery";
+
+const description =
+  "Before-and-after photos of real Central Connecticut painting projects by Jim's Quality Painting — exterior, interior, and cabinet refinishing.";
+---
+
+<BaseLayout title="Gallery" description={description}>
+  {/* Header */}
+  <section class="page-header">
+    <div class="container container--narrow stack-l">
+      <span class="chip">Gallery</span>
+      <h1>Before &amp; after.</h1>
+      <p class="hero-lead">
+        Real projects from around Central Connecticut. Drag the slider on any
+        photo to see the difference — or use the arrow keys when it's focused.
+      </p>
+    </div>
+  </section>
+
+  {/* Gallery */}
+  <section class="section section--tint">
+    <div class="container stack-l">
+      {/* Filters — shown only when JS is available (progressive enhancement) */}
+      <div class="gallery-filters" role="group" aria-label="Filter projects">
+        {
+          GALLERY_FILTERS.map((f, i) => (
+            <button
+              type="button"
+              class="filter-btn"
+              data-filter={f.value}
+              aria-pressed={i === 0 ? "true" : "false"}
+            >
+              {f.label}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="ba-grid reveal-stagger">
+        {
+          GALLERY.map((p) => (
+            <figure class="ba-item" data-cat={p.cat} data-reveal>
+              <BeforeAfter before={p.before} after={p.after} alt={p.alt} />
+              <figcaption>{p.alt}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* CTA band */}
+  <section class="section section--teal">
+    <div class="container stack-l">
+      <div class="eyebrow-gap" data-reveal>
+        <span class="chip">Free quote</span>
+        <h2>Want results like these on your place?</h2>
+        <p>Tell us about the project — we'll give you a clear, honest price.</p>
+      </div>
+      <hr class="cut-line" />
+      <div class="hero-actions" data-reveal>
+        <a class="btn btn--on-teal" href="/contact/">Get a free quote</a>
+        <a class="btn btn--ghost" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  {/* Slider + filter behavior (external file keeps CSP at script-src 'self') */}
+  <script src="/js/gallery.js" defer is:inline></script>
+</BaseLayout>
