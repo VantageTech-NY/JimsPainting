@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { BUSINESS } from "../consts";
+---
+
+<BaseLayout
+  title="Thanks"
+  description="Thanks for reaching out to Jim's Quality Painting."
+  noindex={true}
+>
+  <section class="section">
+    <div class="container container--narrow stack-l">
+      <span class="chip">Thank you</span>
+      <h1>Thanks — we got your message.</h1>
+      <p class="hero-lead">
+        We'll get back to you shortly, usually the same day. If it's urgent,
+        give us a call and we'll pick right up.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href={BUSINESS.phoneHref}
+          >Call {BUSINESS.phone}</a
+        >
+        <a class="btn btn--secondary" href="/">Back to home</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,107 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { BUSINESS, PAINT_BRANDS } from "../consts";
+import duringPhoto from "../assets/photos/hero-during.jpeg";
+
+const description =
+  "Jim's Quality Painting — family-run, owner-operated painting in Central Connecticut for over 20 years. Licensed, insured, and built on referrals.";
+---
+
+<BaseLayout title="About" description={description}>
+  {/* Header */}
+  <section class="page-header">
+    <div class="container container--narrow stack-l">
+      <span class="chip">About</span>
+      <h1>Over 20 years, one standard.</h1>
+      <p class="hero-lead">
+        {BUSINESS.name} is a family-run, owner-operated painting business serving
+        homes and businesses across Central Connecticut.
+      </p>
+    </div>
+  </section>
+
+  {/* Story + photo */}
+  <section class="section section--tint">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="prose" data-reveal>
+          <p>
+            Jim's Quality Painting has been serving the Central Connecticut
+            community for over 20 years. Founded by Jim B., a painter who cares
+            about getting the details right, the business has been built on
+            trust, quality, and doing what we say we'll do.
+          </p>
+          <p>
+            Our team takes pride in clean lines, careful prep, and leaving a
+            space better than we found it. Whether you're refreshing a room,
+            repainting the outside of your home, or revamping a commercial
+            space, we're here to make it straightforward — a clear quote, tidy
+            work, and a finish that lasts.
+          </p>
+          <p>
+            Most of our work comes from referrals and repeat customers, and we'd
+            like to keep it that way. That only happens one well-done job at a
+            time.
+          </p>
+        </div>
+        <div class="hero-media" data-reveal>
+          <Image
+            src={duringPhoto}
+            alt="Jim's Quality Painting working on a Central Connecticut colonial home"
+            widths={[420, 700]}
+            sizes="(max-width: 52rem) 100vw, 420px"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Credentials */}
+  <section class="section">
+    <div class="container container--narrow stack-l">
+      <div class="eyebrow-gap" data-reveal>
+        <span class="chip">The details</span>
+        <h2>Licensed, insured, and particular about paint.</h2>
+      </div>
+      <ul class="check-list" data-reveal>
+        <li>
+          <Icon name="shield-check" />
+          <span>
+            Licensed &amp; insured — {BUSINESS.licenseLabel} #{BUSINESS.licenseNumber}.
+          </span>
+        </li>
+        <li>
+          <Icon name="droplet" />
+          <span>We use {PAINT_BRANDS.join(" and ")} paints on every job.</span>
+        </li>
+        <li>
+          <Icon name="clock" />
+          <span>Over 20 years serving Central Connecticut homeowners and businesses.</span>
+        </li>
+        <li>
+          <Icon name="check-circle" />
+          <span>Free, no-pressure quotes — we'll walk the space with you.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  {/* CTA band */}
+  <section class="section section--teal">
+    <div class="container stack-l">
+      <div class="eyebrow-gap" data-reveal>
+        <span class="chip">Free quote</span>
+        <h2>Let's talk about your project.</h2>
+        <p>Tell us what you have in mind and we'll give you a clear, honest price.</p>
+      </div>
+      <hr class="cut-line" />
+      <div class="hero-actions" data-reveal>
+        <a class="btn btn--on-teal" href="/contact/">Get a free quote</a>
+        <a class="btn btn--ghost" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

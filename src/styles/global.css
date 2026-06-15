@@ -691,6 +691,49 @@
     color: var(--c-on-teal);
     border-color: var(--c-teal);
   }
+
+  /* ------- Contact layout + form ------- */
+  .contact-grid {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  @media (min-width: 52rem) {
+    .contact-grid { grid-template-columns: 1.3fr 1fr; }
+  }
+  .form { display: grid; gap: var(--space-m); }
+  .field { display: grid; gap: 0.35rem; }
+  .field label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step--1);
+    color: var(--c-teal);
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius);
+    background: var(--c-surface);
+    color: var(--c-ink);
+  }
+  .field textarea { min-height: 8rem; resize: vertical; }
+  .field input:focus-visible,
+  .field textarea:focus-visible {
+    outline: 3px solid var(--c-focus);
+    outline-offset: 1px;
+    border-color: var(--c-teal);
+  }
+  .field-hint { font-size: var(--step--1); color: var(--c-ink-soft); }
+  /* Honeypot — kept out of the layout and the a11y tree without inline styles */
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .contact-aside { display: grid; gap: var(--space-m); }
+  .contact-aside .chip { width: fit-content; }
+  .contact-line { display: flex; align-items: center; gap: 0.5rem; }
+  .contact-line svg { color: var(--c-ochre); font-size: 1.1em; flex: 0 0 auto; }
 }
 
 /* ------------------------------------------------------------ utilities - */

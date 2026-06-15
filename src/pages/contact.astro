@@ -1,0 +1,103 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { BUSINESS, SERVICE_TOWNS } from "../consts";
+
+const description =
+  "Get a free painting quote in Central Connecticut. Call Jim's Quality Painting or send a message — we'll get back to you quickly.";
+
+// FormSubmit posts here; redirects to /thanks/. SITE_URL keeps it demo/prod-correct.
+const formAction = `https://formsubmit.co/${BUSINESS.email}`;
+const nextUrl = new URL("/thanks/", Astro.site).href;
+
+// Email shown obfuscated; enhance.js assembles the mailto from data attributes.
+const [emailUser, emailDomain] = BUSINESS.email.split("@");
+---
+
+<BaseLayout title="Contact" description={description}>
+  {/* Header */}
+  <section class="page-header">
+    <div class="container container--narrow stack-l">
+      <span class="chip">Contact</span>
+      <h1>Get a free quote.</h1>
+      <p class="hero-lead">
+        Tell us about your project and we'll get back to you quickly — usually
+        the same day. Prefer to talk? <a href={BUSINESS.phoneHref}>Give us a
+        call</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <div class="contact-grid">
+        {/* Quote form */}
+        <form class="form" action={formAction} method="POST" data-reveal>
+          <input type="hidden" name="_subject" value="New quote request — jimspaint.com" />
+          <input type="hidden" name="_next" value={nextUrl} />
+          <input type="hidden" name="_captcha" value="true" />
+          <input type="hidden" name="_template" value="table" />
+          {/* Honeypot — bots fill it, humans never see it */}
+          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" autocomplete="name" required />
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" autocomplete="email" required />
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone <span class="field-hint">(optional)</span></label>
+            <input id="phone" type="tel" name="phone" autocomplete="tel" />
+          </div>
+
+          <div class="field">
+            <label for="message">What can we help with?</label>
+            <textarea id="message" name="message" required
+            ></textarea>
+          </div>
+
+          <button class="btn btn--primary" type="submit">Send request</button>
+        </form>
+
+        {/* Contact details */}
+        <aside class="contact-aside" data-reveal>
+          <div class="stack">
+            <span class="chip">Reach us</span>
+            <p class="contact-line">
+              <Icon name="check-circle" />
+              <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>
+            </p>
+            <p class="contact-line">
+              {/* Obfuscated; enhance.js turns this into a mailto link */}
+              <Icon name="check-circle" />
+              <a class="email-link" data-user={emailUser} data-domain={emailDomain}>
+                {emailUser} [at] {emailDomain}
+              </a>
+            </p>
+            <p class="field-hint">
+              We don't share your information — it only comes to us.
+            </p>
+          </div>
+
+          <div class="stack">
+            <h2>Service area</h2>
+            <p>We work throughout Central Connecticut, including:</p>
+            <ul class="town-list">
+              {SERVICE_TOWNS.map((town) => <li class="town">{town}</li>)}
+            </ul>
+            <p>
+              <a href={BUSINESS.mapsUrl} rel="noopener" target="_blank">
+                Find us on Google →
+              </a>
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
