@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Icon from "../../components/Icon.astro";
+import { BUSINESS, PAINT_BRANDS, SERVICES } from "../../consts";
+
+const description = `Painting and finishing services across Central Connecticut: ${SERVICES.map((s) => s.title.toLowerCase()).join(", ")}. Free quotes from Jim's Quality Painting.`;
+---
+
+<BaseLayout title="Services" description={description}>
+  {/* Header */}
+  <section class="page-header">
+    <div class="container container--narrow stack-l">
+      <span class="chip">Services</span>
+      <h1>Painting & finishing in Central Connecticut.</h1>
+      <p class="hero-lead">
+        Interior, exterior, cabinets, decks, and board &amp; batten — done with
+        careful prep, {PAINT_BRANDS.join(" and ")} paints, and clean lines you'll
+        notice. Pick a service to learn more, or just give us a call.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href="/contact/">Get a free quote</a>
+        <a class="btn btn--secondary" href={BUSINESS.phoneHref}
+          >Call {BUSINESS.phone}</a
+        >
+      </div>
+    </div>
+  </section>
+
+  {/* Services grid */}
+  <section class="section section--tint">
+    <div class="container">
+      <div class="card-grid reveal-stagger">
+        {
+          SERVICES.map((s) => (
+            <a class="card stack" href={`/services/${s.slug}/`} data-reveal>
+              <h3>{s.title}</h3>
+              <p>{s.blurb}</p>
+              <span class="card-more">
+                Learn more <Icon name="arrow-right" />
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* CTA band */}
+  <section class="section section--teal">
+    <div class="container stack-l">
+      <div class="eyebrow-gap" data-reveal>
+        <span class="chip">Free quote</span>
+        <h2>Not sure which service you need?</h2>
+        <p>Tell us about the project and we'll point you the right way.</p>
+      </div>
+      <hr class="cut-line" />
+      <div class="hero-actions" data-reveal>
+        <a class="btn btn--on-teal" href="/contact/">Get a free quote</a>
+        <a class="btn btn--ghost" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

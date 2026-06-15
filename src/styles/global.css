@@ -555,6 +555,40 @@
     font-size: var(--step--1);
     color: var(--c-teal);
   }
+
+  /* ------- Long-form prose (service/about pages) ------- */
+  .prose > * + * { margin-block-start: var(--space-m); }
+  .prose p { font-size: var(--step-0); }
+  .prose h2 { font-size: var(--step-2); margin-block-start: var(--space-xl); }
+
+  /* ------- "What's included" checklist ------- */
+  .check-list { display: grid; gap: 0.7rem; }
+  .check-list li { display: flex; gap: 0.65rem; align-items: flex-start; }
+  .check-list svg {
+    color: var(--c-ochre);
+    flex: 0 0 auto;
+    margin-block-start: 0.15em;
+    font-size: 1.15em;
+  }
+
+  /* ------- Page header (interior pages) ------- */
+  .page-header { padding-block: var(--space-2xl) var(--space-l); }
+  .page-header .hero-lead { font-size: var(--step-1); color: var(--c-ink-soft); }
+
+  /* ------- Related links row ------- */
+  .pill-links { display: flex; flex-wrap: wrap; gap: 0.5rem 0.7rem; }
+  .pill-links a {
+    text-decoration: none;
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-pill);
+    padding: 0.4rem 0.9rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step--1);
+    color: var(--c-teal);
+  }
+  .pill-links a:hover { border-color: var(--c-ochre); color: var(--c-ochre-text); }
 }
 
 /* ------------------------------------------------------------ utilities - */

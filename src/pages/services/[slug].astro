@@ -1,0 +1,155 @@
+---
+import { Image } from "astro:assets";
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Icon from "../../components/Icon.astro";
+import { BUSINESS, SERVICES, SERVICE_TOWNS } from "../../consts";
+import { SERVICE_DETAILS } from "../../data/services";
+
+export const getStaticPaths = (() =>
+  SERVICES.map((service) => ({
+    params: { slug: service.slug },
+    props: { service, detail: SERVICE_DETAILS[service.slug] },
+  }))) satisfies GetStaticPaths;
+
+const { service, detail } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const others = SERVICES.filter((s) => s.slug !== service.slug);
+
+// Per-page Service schema, linked to the site-wide business (plan2.md 3.1).
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: service.title,
+  serviceType: service.title,
+  description: detail.metaDescription,
+  url: canonical,
+  provider: { "@id": `${Astro.site}#business` },
+  areaServed: SERVICE_TOWNS.map((name) => ({
+    "@type": "City",
+    name: `${name}, ${BUSINESS.region}`,
+  })),
+};
+---
+
+<BaseLayout title={service.title} description={detail.metaDescription}>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(serviceSchema)}
+    slot="head"
+  />
+
+  {/* Header */}
+  <section class="page-header">
+    <div class="container container--narrow stack-l">
+      <span class="chip">Services</span>
+      <h1>{service.title} in Central Connecticut</h1>
+      <p class="hero-lead">{detail.lead}</p>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href="/contact/">Get a free quote</a>
+        <a class="btn btn--secondary" href={BUSINESS.phoneHref}
+          >Call {BUSINESS.phone}</a
+        >
+      </div>
+    </div>
+  </section>
+
+  {/* Body + what's included */}
+  <section class="section section--tint">
+    <div class="container container--narrow stack-l">
+      <div class="prose" data-reveal>
+        {detail.body.map((para) => <p>{para}</p>)}
+      </div>
+
+      <div class="stack" data-reveal>
+        <h2>What's included</h2>
+        <ul class="check-list">
+          {
+            detail.included.map((item) => (
+              <li>
+                <Icon name="check-circle" />
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* Project photos (or placeholder while real photos are pending) */}
+  <section class="section">
+    <div class="container stack-l">
+      <div class="eyebrow-gap" data-reveal>
+        <span class="chip">Recent work</span>
+        <h2>Recent {service.title.toLowerCase()} projects.</h2>
+      </div>
+      {
+        detail.photos.length > 0 ? (
+          <div class="work-grid reveal-stagger">
+            {detail.photos.map((p) => (
+              <figure class="work-item" data-reveal>
+                <Image
+                  src={p.img}
+                  alt={p.alt}
+                  widths={[320, 640]}
+                  sizes="(max-width: 52rem) 50vw, 320px"
+                  loading="lazy"
+                />
+                <figcaption class="work-cap">{p.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+        ) : (
+          /* PLACEHOLDER — awaiting real photos for this service (plan2.md 5.1) */
+          <p data-reveal>
+            Photos of recent {service.title.toLowerCase()} work are on the way.
+            In the meantime, <a href={BUSINESS.phoneHref}>give us a call</a> and
+            we'll happily share examples.
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  {/* Service area */}
+  <section class="section section--tint">
+    <div class="container container--narrow stack">
+      <span class="chip">Service area</span>
+      <p>
+        We provide {service.title.toLowerCase()} throughout Central Connecticut,
+        including {SERVICE_TOWNS.slice(0, -1).join(", ")}, and {
+          SERVICE_TOWNS[SERVICE_TOWNS.length - 1]
+        }. Not sure if we cover your town? <a href={BUSINESS.phoneHref}>Give us a
+        call</a>.
+      </p>
+    </div>
+  </section>
+
+  {/* Other services */}
+  <section class="section">
+    <div class="container container--narrow stack">
+      <h2>Other services</h2>
+      <div class="pill-links">
+        {others.map((s) => <a href={`/services/${s.slug}/`}>{s.title}</a>)}
+      </div>
+    </div>
+  </section>
+
+  {/* CTA band */}
+  <section class="section section--teal">
+    <div class="container stack-l">
+      <div class="eyebrow-gap" data-reveal>
+        <span class="chip">Free quote</span>
+        <h2>Ready to talk about your project?</h2>
+        <p>We'll walk the space with you and give you a clear, honest price.</p>
+      </div>
+      <hr class="cut-line" />
+      <div class="hero-actions" data-reveal>
+        <a class="btn btn--on-teal" href="/contact/">Get a free quote</a>
+        <a class="btn btn--ghost" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
