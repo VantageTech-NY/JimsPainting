@@ -38,6 +38,37 @@ export const SERVICE_TOWNS = [
   "Avon",
 ] as const;
 
+// Canonical service offering — single source of truth for the Home preview,
+// the /services/ index, per-service pages (/services/<slug>/), Service schema,
+// and llms.txt. Blurbs are DRAFT copy (owner sign-off pending, plan2.md 5.7).
+export const SERVICES = [
+  {
+    slug: "interior",
+    title: "Interior painting",
+    blurb: "Walls, trim, ceilings, and doors — clean cut lines and tidy work, room by room.",
+  },
+  {
+    slug: "exterior",
+    title: "Exterior painting",
+    blurb: "Prep, prime, and finish that stands up to Connecticut winters.",
+  },
+  {
+    slug: "cabinets",
+    title: "Cabinet refinishing",
+    blurb: "A durable, factory-smooth finish that makes tired kitchen cabinets look new.",
+  },
+  {
+    slug: "deck-staining",
+    title: "Deck staining",
+    blurb: "Cleaning, prep, and stain that protects decks and fences from sun and weather.",
+  },
+  {
+    slug: "board-and-batten",
+    title: "Board & batten installation",
+    blurb: "Board-and-batten accent walls and exterior siding, installed and finished.",
+  },
+] as const;
+
 // Primary nav — drives Header and (later) sitemap (plan2.md Phase 2 IA).
 export const NAV = [
   { label: "Home", href: "/" },

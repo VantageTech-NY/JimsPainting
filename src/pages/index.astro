@@ -1,15 +1,10 @@
 ---
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { BUSINESS, PAINT_BRANDS } from "../consts";
+import { BUSINESS, PAINT_BRANDS, SERVICES } from "../consts";
 import hero from "../assets/photos/hero.png";
 
-// PLACEHOLDER copy — design-system showcase only. Real Home content is Phase 6 step 3.
-const services = [
-  { title: "Interior painting", blurb: "Walls, trim, ceilings, doors — clean cut lines and tidy work, room by room." },
-  { title: "Exterior painting", blurb: "Prep, prime, and finish that stands up to Connecticut winters." },
-  { title: "Cabinets & decks", blurb: "Cabinet refinishing and deck staining that brings tired surfaces back." },
-];
+// PLACEHOLDER layout — design-system showcase. Real Home content is Phase 6 step 3.
 ---
 
 <BaseLayout title="" description={BUSINESS.tagline}>
@@ -56,7 +51,7 @@ const services = [
       </div>
       <div class="card-grid reveal-stagger">
         {
-          services.map((s) => (
+          SERVICES.map((s) => (
             <article class="card stack" data-reveal>
               <h3>{s.title}</h3>
               <p>{s.blurb}</p>
