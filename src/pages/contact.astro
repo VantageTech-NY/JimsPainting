@@ -9,9 +9,6 @@ const description =
 // FormSubmit posts here; redirects to /thanks/. SITE_URL keeps it demo/prod-correct.
 const formAction = `https://formsubmit.co/${BUSINESS.email}`;
 const nextUrl = new URL("/thanks/", Astro.site).href;
-
-// Email shown obfuscated; enhance.js assembles the mailto from data attributes.
-const [emailUser, emailDomain] = BUSINESS.email.split("@");
 ---
 
 <BaseLayout title="Contact" description={description}>
@@ -73,11 +70,8 @@ const [emailUser, emailDomain] = BUSINESS.email.split("@");
               <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>
             </p>
             <p class="contact-line">
-              {/* Obfuscated; enhance.js turns this into a mailto link */}
               <Icon name="check-circle" />
-              <a class="email-link" data-user={emailUser} data-domain={emailDomain}>
-                {emailUser} [at] {emailDomain}
-              </a>
+              <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
             </p>
             <p class="field-hint">
               We don't share your information — it only comes to us.

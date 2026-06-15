@@ -413,6 +413,14 @@
   }
 
   /* ------- Footer ------- */
+  .footer-logo {
+    width: 5rem;
+    height: 5rem;
+    border-radius: var(--radius);
+    background: #fff;
+    object-fit: contain;
+    margin-block-end: var(--space-2xs);
+  }
   .site-footer {
     background: var(--c-teal-deep);
     color: var(--c-on-teal);

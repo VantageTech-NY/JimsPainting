@@ -5,14 +5,6 @@
   var root = document.documentElement;
   root.classList.add("js");
 
-  // Email deobfuscation — assemble the address from data attributes so it
-  // isn't sitting in the HTML as plain text for scrapers (plan2.md 6.5).
-  document.querySelectorAll("[data-user][data-domain]").forEach(function (el) {
-    var addr = el.getAttribute("data-user") + "@" + el.getAttribute("data-domain");
-    el.setAttribute("href", "mailto:" + addr);
-    el.textContent = addr;
-  });
-
   // Mobile nav toggle
   var burger = document.querySelector(".nav-burger");
   var header = document.querySelector(".site-header");

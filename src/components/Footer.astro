@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import { BUSINESS, SERVICE_TOWNS, PAINT_BRANDS } from "../consts";
+import logo from "../assets/logo.jpg";
 
 const year = new Date().getFullYear();
 ---
@@ -7,6 +9,14 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="footer-inner container">
     <div class="footer-brand stack">
+      <Image
+        class="footer-logo"
+        src={logo}
+        alt="Jim's Quality Painting logo"
+        width={120}
+        height={120}
+        loading="lazy"
+      />
       <p class="footer-name">{BUSINESS.name}</p>
       <p>{BUSINESS.tagline}</p>
       <p>
