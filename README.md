@@ -1,210 +1,126 @@
-# Jim's Quality Painting — website
+# Jim's Quality Painting — website (2.0)
 
-Static one-page site for Jim's Quality Painting (https://jimspaint.com). Hosted free on Cloudflare Pages. Built on the Start Bootstrap "Grayscale" theme.
+Static, multi-page site for [Jim's Quality Painting](https://jimspaint.com),
+built with [Astro](https://astro.build) and hosted free on Cloudflare. Zero
+client-side framework; ships almost no JavaScript.
 
-No build step, no server. Editing means changing files in this repo and pushing to `main` — Cloudflare Pages rebuilds and serves automatically.
+> **Branches.** The 2.0 site lives on **`demo-v2`** and deploys to
+> **demo.jimspaint.com** (staging). The old v1 site is on **`main`** and serves
+> production **jimspaint.com** until cutover (see [Cutover](#cutover)). Do all
+> 2.0 work on `demo-v2`.
 
 ---
 
-## Stack
+## Local development
 
-- **HTML / Bootstrap 5.2.3** — single-page layout in `index.html`, plus `thanks.html` (form success), `404.html` (not-found).
-- **CSS** — `css/styles.css` (source, full theme + Bootstrap, ~247 KB) and `css/styles.min.css` (minified, shipped, ~202 KB). HTML references the `.min` file.
-- **JS** — `js/scripts.js` (navbar shrink, scrollspy, mobile collapse, copyright year, email/phone link hydration). Plus Bootstrap bundle from jsdelivr CDN.
-- **Form** — handled by [FormSubmit](https://formsubmit.co) (free; sends form to Jim's email).
-- **Icons** — inline SVGs (Font Awesome free 6.3.0 paths). No external icon library loaded.
-- **Fonts** — Google Fonts: Nunito (400, 700) + Varela Round, with `display=swap`.
-- **Hosting** — Cloudflare Pages. `_headers` controls HTTP headers, `_redirects` controls URL redirects.
+Requires **Node 22** (see `.nvmrc`).
+
+```bash
+npm install
+npm run dev       # local dev server at http://localhost:4321
+npm run build     # production build to dist/
+npm run preview   # serve the built dist/ locally
+npm run check     # astro check (type/template diagnostics)
+```
+
+By default the site builds for the demo host. To preview a production build:
+
+```bash
+SITE_URL=https://jimspaint.com npm run build
+```
+
+### `SITE_URL` — one variable flips demo ↔ prod
+
+`SITE_URL` (default `https://demo.jimspaint.com`) drives, at build time:
+
+- canonical + Open Graph URLs and all JSON-LD URLs,
+- the `noindex` meta + `X-Robots-Tag` (demo is hidden from search/AI),
+- `robots.txt` (demo `Disallow: /`; prod permissive + AI-crawler allows),
+- `llms.txt`, the contact form's redirect target,
+- the sitemap (generated for **prod only**).
+
+It's set as a build environment variable on the Cloudflare project.
+
+---
+
+## Project structure
+
+```
+src/
+  consts.ts              Business facts: phone, email, license, towns,
+                         SERVICES list, NAV, TESTIMONIALS  ← edit these
+  data/
+    services.ts          Per-service page copy + photos
+    gallery.ts           Before/after gallery pairs
+  layouts/BaseLayout.astro   <head>, schema, fonts, header/footer
+  components/            Header, Footer, Icon, PhoneIcon, BeforeAfter (slider)
+  pages/                 Routes (see below)
+  styles/global.css      The whole design system (CSS custom properties)
+  assets/photos/         Images processed by astro:assets at build
+public/                  Served as-is: _headers, favicons, js/ (enhance.js,
+                         gallery.js — small vanilla progressive enhancement)
+asests_v2/               Full-res photo originals (not deployed; gitignored)
+```
+
+Pages: `/` · `/services/` + `/services/<slug>/` · `/gallery/` · `/about/` ·
+`/contact/` · `/thanks/` · `/faq/` · `404`.
+
+---
+
+## Common edits
+
+### Add a gallery before/after pair
+
+1. Drop the two photos in `src/assets/photos/`. If they're `.heic` (iPhone),
+   convert to `.jpg` first:
+   ```bash
+   sips -s format jpeg -s formatOptions 90 input.heic --out output.jpg
+   ```
+2. Add an entry to `GALLERY` in `src/data/gallery.ts` — import the two images
+   and add `{ before, after, alt, cat }` where `cat` is `"exterior"`,
+   `"interior"`, or `"cabinets"` (drives the filter).
+
+That's it — the slider and filtering are automatic. `astro:assets` resizes and
+converts to WebP at build.
+
+### Add or change a testimonial
+
+Edit `TESTIMONIALS` in `src/consts.ts` — each is `{ quote, author }`. They
+render on the home page automatically.
+
+### Edit services or business info
+
+- **Service list / names / blurbs:** `SERVICES` in `src/consts.ts`.
+- **Service page copy & photos:** `src/data/services.ts`.
+- **Phone, email, license #, towns, paint brands:** `src/consts.ts`.
+
+The contact form emails Jim via [FormSubmit](https://formsubmit.co). The first
+real submission triggers a one-time activation email Jim must click before the
+form starts delivering.
 
 ---
 
 ## Deploy
 
-1. Commit and push to `main`.
-2. Cloudflare Pages picks up the commit automatically, deploys, and serves at https://jimspaint.com.
-3. Pull-request branches get preview URLs (`*.pages.dev`) — useful for testing before merging.
+The Cloudflare project (**`jimspainting-v2`**, a Worker serving static assets)
+builds from `demo-v2` on every push:
 
-No build command — Pages just publishes the repo root as-is.
+- **Build command:** `npm run build`
+- **Deploy command:** `npx wrangler deploy`
+- **Output:** `dist/` (see `wrangler.jsonc`)
+- **Env var:** `SITE_URL=https://demo.jimspaint.com`
 
----
+If a push doesn't deploy, trigger **Create deployment** in the Cloudflare
+dashboard (Workers & Pages → jimspainting-v2 → Deployments).
 
-## Canonical domain
-
-The apex `jimspaint.com` is canonical. `www.jimspaint.com` redirects to apex via `_redirects` (301). All metadata (`sitemap.xml`, `robots.txt`, `<link rel="canonical">`, `og:url`) uses apex.
-
-If www isn't actually routed to Cloudflare Pages, the `_redirects` rule won't fire — handle that case in the Cloudflare dashboard with a redirect rule instead.
-
----
-
-## Editing content
-
-Most edits happen in `index.html`. Common targets:
-
-| What to change             | Where                                                                 |
-| -------------------------- | --------------------------------------------------------------------- |
-| Headline / hero text       | `<header class="masthead">`                                            |
-| Service descriptions       | The `<!-- Project N: ... -->` rows under `<section id="projects">`     |
-| About Us copy              | `<section id="about-us">` → "About Us" col                             |
-| Service-area town list     | `<section id="about-us">` → "Service Area" row (also update JSON-LD)   |
-| Testimonials               | `<section id="about-us">` → "What Our Clients Say" cards               |
-| FAQ                        | `<section id="faq">` → also update the `FAQPage` JSON-LD in `<head>` (and recompute the CSP hash) |
-| Phone number               | `js/scripts.js` (`phoneLink` block) — change both `tel:` digits and display string |
-| Email                      | `js/scripts.js` (`emailLink` block) — change `user` / `domain` vars    |
-| Footer / copyright         | Year is dynamic (set by JS). Brand name is hard-coded in footer.       |
-| Maps profile link          | Look for `maps.app.goo.gl/o1sANcZx5fbq9ogX8` (appears in HTML + JSON-LD) |
-
-After editing any town list, copyright text, etc., the page will refresh on next deploy — no rebuild step needed.
-
-### Editing the JSON-LD (structured data)
-
-The `<script type="application/ld+json">` block in `<head>` of `index.html` powers Google's local-business knowledge panel (HousePainter schema).
-
-If you edit it, **you must also recompute the CSP hash** in `_headers` (see "CSP hash" below) — otherwise the script will be blocked by the browser and Google will stop seeing the schema.
-
-Validate the JSON with Google's Rich Results Test: https://search.google.com/test/rich-results
+> `_redirects` on Cloudflare static assets only allows **relative** URLs — the
+> www→apex redirect must be a Cloudflare Redirect Rule, not `_redirects`.
 
 ---
 
-## Updating images
+## Cutover
 
-Originals live in `assets/img/originals/` (gitignored). The site ships only optimized WebP (and one OG JPG). All site image references use `.webp` paths.
-
-To add or replace an image, on macOS:
-
-```bash
-# install once
-brew install webp
-
-# from repo root, e.g. replacing the hero
-cp /path/to/new-hero.png assets/img/originals/jqp-hero.png
-sips --resampleWidth 1600 assets/img/originals/jqp-hero.png --out /tmp/hero.png
-cwebp -q 82 /tmp/hero.png -o assets/img/jqp-hero.webp
-```
-
-Then in HTML / CSS, update the `width`/`height` attributes to the new intrinsic size (run `sips -g pixelWidth -g pixelHeight assets/img/jqp-hero.webp`).
-
-For the Open Graph image (`assets/img/jqp-open-graph.jpg`), keep it as **JPG at exactly 1200×630** — some social platforms (LinkedIn, older Slack) don't render WebP for OG.
-
-Targets used: photos at q80 WebP, hero/featured at q82. Total image payload should stay under ~1 MB.
-
----
-
-## CSS
-
-`css/styles.css` is the source (full Bootstrap + theme). `css/styles.min.css` is what the site loads. To regenerate the minified file after editing the source:
-
-```bash
-npx --yes clean-css-cli@5 -o css/styles.min.css css/styles.css
-```
-
-The masthead background image path lives near line 11072 of `styles.css` — update there if the hero filename ever changes.
-
----
-
-## Form (FormSubmit)
-
-The "Get a Quote" form posts to `https://formsubmit.co/jim@jimspaint.com`. On success, FormSubmit redirects to `/thanks.html`.
-
-**Activation:** the first time FormSubmit receives a submission for a new email address, FormSubmit sends Jim an activation email. He must click the link before any submissions will be delivered. After activation, submissions arrive normally.
-
-**Anti-scraping note:** the plan suggests swapping the raw-email endpoint (`formsubmit.co/jim@jimspaint.com`) for the random-string version (`formsubmit.co/<hash>`) generated after first activation. Doing that hides Jim's real address from the page source. Current form still uses the raw-email endpoint — switch when convenient.
-
-If FormSubmit ever proves unreliable, the fallback is a Cloudflare Pages Function (`/functions/api/contact.js`) using MailChannels — free on Cloudflare Pages.
-
----
-
-## Security headers & CSP
-
-Configured in `_headers` (Cloudflare Pages syntax). Includes:
-
-- `Strict-Transport-Security`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`.
-- `Content-Security-Policy` (strict — no `'unsafe-inline'` for scripts).
-
-### CSP hashes — important when editing JSON-LD
-
-The CSP allows two inline scripts: the `HousePainter` JSON-LD and the `FAQPage` JSON-LD in `index.html` head. Each is permitted via its own SHA-256 hash in the `script-src` directive.
-
-If you edit **either** JSON-LD block (even whitespace), recompute both hashes — the order in `_headers` matters less than getting the exact bytes right:
-
-```bash
-python3 -c "
-import re, hashlib, base64, json
-html = open('index.html').read()
-for i, b in enumerate(re.findall(r'<script type=\"application/ld\+json\">(.*?)</script>', html, re.DOTALL), 1):
-    h = base64.b64encode(hashlib.sha256(b.encode('utf-8')).digest()).decode()
-    print(f'#{i} {json.loads(b)[\"@type\"]:14s} sha256-{h}')
-"
-```
-
-Paste both `sha256-...` values into `_headers`, replacing the existing ones inside `script-src`.
-
-If you forget, the browser blocks the affected JSON-LD and Google / AI crawlers stop seeing it — visible in DevTools as a CSP violation in the console.
-
-### Adding new external resources
-
-The CSP whitelist is narrow. If you add a new third-party (analytics, embedded map, etc.), update the matching directive in `_headers`:
-
-| Resource type            | CSP directive       |
-| ------------------------ | ------------------- |
-| Script (CDN)             | `script-src`        |
-| Stylesheet               | `style-src`         |
-| Font file                | `font-src`          |
-| Image / SVG              | `img-src`           |
-| Form POST target         | `form-action`       |
-| iframe target            | `frame-src`         |
-
----
-
-## Analytics
-
-Cloudflare Web Analytics is enabled at the Pages-project level (Cloudflare dashboard → Pages → jimspaint.com → Settings → Web Analytics). Cloudflare auto-injects the beacon script (`https://static.cloudflareinsights.com/beacon.min.js`) into every served page on deploy — no script tag in this repo.
-
-The CSP in `_headers` already whitelists the script source (`script-src https://static.cloudflareinsights.com`) and the beacon POST target (`connect-src https://cloudflareinsights.com`). If Cloudflare ever changes the host or adds another endpoint, look in DevTools Console for the CSP violation and update those directives.
-
-Cloudflare Web Analytics is cookieless and doesn't require a consent banner.
-
----
-
-## Caching headers
-
-Also in `_headers`:
-
-- `/assets/*` → 1 year, immutable (rename files to bust cache when replacing)
-- `/css/*`, `/js/*` → 1 week
-
-Cloudflare Pages also invalidates by ETag on deploy, so a hard rename isn't always needed — but if an image is replaced in-place and looks stale, append a query string or rename it.
-
----
-
-## SEO
-
-- `sitemap.xml` lists only the homepage. Update `lastmod` (`YYYY-MM-DD`) when content meaningfully changes.
-- `robots.txt` allows everything.
-- Canonical URL in `<head>` points to apex.
-- HousePainter JSON-LD covers areaServed, telephone, image, sameAs.
-
----
-
-## Outstanding placeholders
-
-Search the codebase for `TODO(jim)` to find inline markers. Currently:
-
-- **Service-area town list** — currently a Hartford County placeholder. Confirm Jim's actual coverage and update both the JSON-LD `areaServed` array (`index.html` head) and the Service Area paragraph (`index.html` body, `<!-- Service Area. TODO(jim) -->`).
-- **Street address & opening hours** in JSON-LD — currently only `addressRegion: CT`. Adding `streetAddress` + `postalCode` + `openingHours` unlocks richer Google rich results.
-
-Not yet in code, but on the wishlist:
-
-- **CT HIC registration number** — when available, add to JSON-LD as `identifier` and reference in the planned FAQ section.
-
----
-
-## Local preview
-
-To preview locally without deploying:
-
-```bash
-python3 -m http.server 8000
-# open http://localhost:8000
-```
-
-Note: `_headers` and `_redirects` only apply on Cloudflare. CSP violations only show in production / preview deploys.
+When the owner has signed off on copy, photos, and design, see **Phase 7** in
+`plan2.md`. In short: point `jimspaint.com` at this project (or set
+`SITE_URL=https://jimspaint.com`), which auto-flips robots/sitemap/noindex, then
+submit the sitemap in Search Console.
