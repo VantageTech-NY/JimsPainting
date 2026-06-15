@@ -1,4 +1,7 @@
 ---
+import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/hanken-grotesk";
+import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { BUSINESS, IS_DEMO } from "../consts";
@@ -28,6 +31,7 @@ const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).href : undefined;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#14424e" />
     <link rel="canonical" href={canonical} />
 
     {/* Demo gating — keep staging out of search/AI indexes (plan2.md 0.2). */}
@@ -42,6 +46,7 @@ const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).href : undefined;
 
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     {/*
       JSON-LD (HousePainter / Service / FAQPage) is wired in Phase 6 step 4.
@@ -55,5 +60,11 @@ const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).href : undefined;
       <slot />
     </main>
     <Footer />
+
+    {/*
+      Progressive enhancement only — external static file (CSP script-src
+      'self', no inline). The site is fully usable with this script absent.
+    */}
+    <script src="/js/enhance.js" defer is:inline></script>
   </body>
 </html>

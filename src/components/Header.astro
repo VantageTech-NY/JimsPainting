@@ -7,18 +7,30 @@ const isActive = (href: string) =>
   href === "/" ? path === "/" : path.startsWith(href);
 ---
 
-<header>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <div class="header-inner">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="header-inner container">
     <a class="brand" href="/">{BUSINESS.name}</a>
 
-    {/* No-JS mobile nav: a native <details> disclosure. Design pass refines it. */}
-    <nav aria-label="Primary">
-      <ul>
+    <button
+      class="nav-burger"
+      type="button"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+    >
+      Menu
+    </button>
+
+    <nav class="primary-nav" id="primary-nav" aria-label="Primary">
+      <ul class="nav-list">
         {
           NAV.map((item) => (
             <li>
-              <a href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
+              >
                 {item.label}
               </a>
             </li>
@@ -28,6 +40,8 @@ const isActive = (href: string) =>
     </nav>
 
     {/* Phone is visible on every page — calls convert best for this audience. */}
-    <a class="header-phone" href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>
+    <a class="header-phone" href={BUSINESS.phoneHref}>
+      <span aria-hidden="true">☎</span> {BUSINESS.phone}
+    </a>
   </div>
 </header>

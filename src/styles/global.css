@@ -1,0 +1,514 @@
+/* =========================================================================
+   Jim's Quality Painting — design system (Phase 3)
+   Direction: daylight-bright, photos are the product. Signature motif is the
+   "cut line" — the crisp edge where one paint color meets another. All motion
+   is CSS/compositor-only and gated behind prefers-reduced-motion.
+   ========================================================================= */
+
+@layer reset, tokens, base, layout, components, utilities, motion;
+
+/* ----------------------------------------------------------------- reset - */
+@layer reset {
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
+
+  * { margin: 0; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body { min-height: 100svh; }
+
+  img,
+  picture,
+  svg { display: block; max-width: 100%; height: auto; }
+
+  input,
+  button,
+  textarea,
+  select { font: inherit; color: inherit; }
+
+  ul[class],
+  ol[class] { list-style: none; padding: 0; }
+
+  a { color: inherit; }
+}
+
+/* ---------------------------------------------------------------- tokens - */
+@layer tokens {
+  :root {
+    /* Brand — deep teal + warm ochre meeting at the cut line */
+    --c-teal: #14424e;
+    --c-teal-deep: #0e323b;
+    --c-teal-tint: #e7eeee;        /* subtle alt-section ground */
+    --c-ochre: #e0922f;
+    --c-ochre-deep: #c2761b;        /* hover / pressed */
+    --c-ochre-text: #95560f;        /* AA-safe ochre for link text on paper */
+
+    /* Neutrals */
+    --c-paper: #faf7f1;             /* warm daylight page ground */
+    --c-surface: #ffffff;           /* photo cards, raised surfaces */
+    --c-ink: #10242b;               /* primary text */
+    --c-ink-soft: #41555c;          /* muted text (AA on paper) */
+    --c-line: #e6e0d5;              /* warm hairline borders */
+    --c-on-teal: #f3eee4;           /* text on teal */
+    --c-on-teal-soft: #c3d2d4;      /* muted text on teal */
+
+    --c-focus: var(--c-ochre);
+
+    /* Typography */
+    --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+    --font-body: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+
+    /* Fluid type scale (~1.25), body base ~17–19px for a 40s–70s audience */
+    --step--1: clamp(0.875rem, 0.83rem + 0.18vw, 0.95rem);
+    --step-0: clamp(1.0625rem, 1.0rem + 0.25vw, 1.1875rem);
+    --step-1: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+    --step-2: clamp(1.5rem, 1.33rem + 0.8vw, 2rem);
+    --step-3: clamp(1.85rem, 1.55rem + 1.45vw, 2.75rem);
+    --step-4: clamp(2.25rem, 1.78rem + 2.3vw, 3.75rem);
+    --step-5: clamp(2.7rem, 2.0rem + 3.4vw, 4.6rem);
+
+    /* Spacing */
+    --space-3xs: 0.25rem;
+    --space-2xs: 0.5rem;
+    --space-xs: 0.75rem;
+    --space-s: 1rem;
+    --space-m: 1.5rem;
+    --space-l: 2rem;
+    --space-xl: 3rem;
+    --space-2xl: 4.5rem;
+    --space-3xl: 7rem;
+
+    /* Layout */
+    --container: 72rem;
+    --container-narrow: 46rem;
+    --gutter: clamp(1rem, 0.55rem + 2vw, 2rem);
+
+    /* Radii */
+    --radius-xs: 4px;
+    --radius: 10px;
+    --radius-lg: 18px;
+    --radius-pill: 999px;
+
+    /* Shadows (ink-tinted, soft) */
+    --shadow-sm: 0 1px 2px rgba(16, 36, 43, 0.06), 0 2px 6px rgba(16, 36, 43, 0.05);
+    --shadow-md: 0 6px 18px rgba(16, 36, 43, 0.1);
+    --shadow-lg: 0 16px 40px rgba(16, 36, 43, 0.14);
+
+    /* Motion + the cut line */
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --dur-1: 150ms;
+    --dur-2: 320ms;
+    --dur-roller: 900ms;
+    --cut: 4px;
+  }
+}
+
+/* ------------------------------------------------------------------ base - */
+@layer base {
+  body {
+    background: var(--c-paper);
+    color: var(--c-ink);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    color: var(--c-teal);
+    text-wrap: balance;
+    font-weight: 800;
+  }
+
+  h1 { font-size: var(--step-4); }
+  h2 { font-size: var(--step-3); }
+  h3 { font-size: var(--step-2); }
+
+  p { max-width: 65ch; }
+
+  a {
+    color: var(--c-ochre-text);
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: 0.08em;
+  }
+  a:hover { color: var(--c-ochre-deep); }
+
+  :where(a, button, summary, input, textarea, select):focus-visible {
+    outline: 3px solid var(--c-focus);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection { background: var(--c-ochre); color: var(--c-ink); }
+
+  :target { scroll-margin-top: 6rem; }
+}
+
+/* ---------------------------------------------------------------- layout - */
+@layer layout {
+  .container {
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .container--narrow { max-width: var(--container-narrow); }
+
+  .section { padding-block: var(--space-2xl); }
+  .section--tint { background: var(--c-teal-tint); }
+
+  /* Teal section carries the ochre cut line along its top edge */
+  .section--teal {
+    background: var(--c-teal);
+    color: var(--c-on-teal);
+    border-top: var(--cut) solid var(--c-ochre);
+  }
+  .section--teal :is(h1, h2, h3, h4) { color: var(--c-on-teal); }
+  .section--teal a { color: var(--c-ochre); }
+
+  .stack > * + * { margin-block-start: var(--space-s); }
+  .stack-l > * + * { margin-block-start: var(--space-l); }
+}
+
+/* ------------------------------------------------------------ components - */
+@layer components {
+  /* Skip link */
+  .skip-link {
+    position: absolute;
+    left: var(--space-s);
+    top: -4rem;
+    z-index: 100;
+    background: var(--c-ochre);
+    color: var(--c-ink);
+    padding: 0.6rem 1rem;
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-decoration: none;
+    transition: top var(--dur-1) var(--ease-out);
+  }
+  .skip-link:focus { top: var(--space-s); }
+
+  /* Swatch-card section label — a paint chip pulled from the fan deck */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-teal);
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-xs);
+    padding: 0.35rem 0.7rem 0.35rem 0.45rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .chip::before {
+    content: "";
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 3px;
+    background: var(--c-ochre);
+  }
+  .section--teal .chip { color: var(--c-on-teal); background: var(--c-teal-deep); border-color: rgba(255, 255, 255, 0.16); }
+
+  /* Cut-line divider — two colors meeting at a crisp edge */
+  .cut-line {
+    height: var(--cut);
+    background: var(--c-ochre);
+    border: 0;
+    width: clamp(3rem, 8vw, 6rem);
+    border-radius: var(--radius-pill);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step-0);
+    line-height: 1;
+    padding: 0.85rem 1.5rem;
+    border: 2px solid transparent;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background var(--dur-1) var(--ease-out),
+      box-shadow var(--dur-1) var(--ease-out),
+      transform var(--dur-1) var(--ease-out),
+      color var(--dur-1) var(--ease-out);
+  }
+  .btn--primary { background: var(--c-ochre); color: var(--c-ink); box-shadow: var(--shadow-sm); }
+  .btn--primary:hover { background: var(--c-ochre-deep); color: var(--c-ink); }
+  .btn--secondary { background: transparent; color: var(--c-teal); border-color: var(--c-teal); }
+  .btn--secondary:hover { background: var(--c-teal); color: var(--c-on-teal); }
+  /* On teal backgrounds */
+  .btn--on-teal { background: var(--c-ochre); color: var(--c-ink); }
+  .btn--ghost { background: transparent; color: var(--c-on-teal); border-color: var(--c-on-teal-soft); }
+  .btn--ghost:hover { background: rgba(255, 255, 255, 0.1); color: var(--c-on-teal); }
+
+  /* Fan-deck card — lifts and shows an ochre chip edge on hover */
+  .card {
+    position: relative;
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius);
+    padding: var(--space-l);
+    overflow: hidden;
+    transition: box-shadow var(--dur-2) var(--ease-out),
+      transform var(--dur-2) var(--ease-out);
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--cut);
+    background: var(--c-ochre);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--dur-2) var(--ease-out);
+  }
+  .card:hover { box-shadow: var(--shadow-lg); }
+  .card-grid {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+
+  /* ------- Header ------- */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--c-teal);
+    color: var(--c-on-teal);
+    border-bottom: var(--cut) solid var(--c-ochre);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    min-height: 4.25rem;
+  }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--step-1);
+    color: var(--c-on-teal);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    margin-inline-end: auto;
+  }
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 1.6vw, 1.6rem);
+    margin: 0;
+  }
+  .nav-list a {
+    position: relative;
+    color: var(--c-on-teal);
+    text-decoration: none;
+    font-weight: 500;
+    padding-block: 0.4rem;
+  }
+  .nav-list a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: var(--cut);
+    background: var(--c-ochre);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-1) var(--ease-out);
+  }
+  .nav-list a:hover::after,
+  .nav-list a[aria-current="page"]::after { transform: scaleX(1); }
+
+  .header-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--c-ochre);
+    border: 2px solid var(--c-ochre);
+    border-radius: var(--radius-pill);
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out);
+  }
+  .header-phone:hover { background: var(--c-ochre); color: var(--c-ink); }
+
+  /* Mobile nav toggle — hidden on desktop; progressive enhancement */
+  .nav-burger { display: none; }
+
+  @media (max-width: 52rem) {
+    .nav-burger {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      border: 2px solid var(--c-on-teal-soft);
+      color: var(--c-on-teal);
+      border-radius: var(--radius);
+      padding: 0.45rem 0.8rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .primary-nav {
+      flex-basis: 100%;
+      order: 3;
+    }
+    .nav-list {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      padding-block: var(--space-xs);
+    }
+    .nav-list li { width: 100%; }
+    .nav-list a { display: block; width: 100%; padding-block: 0.7rem; }
+    .header-inner { flex-wrap: wrap; }
+
+    /* With JS, collapse the nav until toggled. No-JS: nav stays visible. */
+    html.js .primary-nav { display: none; }
+    html.js .site-header[data-open] .primary-nav { display: block; }
+  }
+
+  /* ------- Footer ------- */
+  .site-footer {
+    background: var(--c-teal-deep);
+    color: var(--c-on-teal);
+    border-top: var(--cut) solid var(--c-ochre);
+    padding-block: var(--space-2xl) var(--space-l);
+  }
+  .site-footer :is(h2, h3) { color: var(--c-on-teal); font-size: var(--step-1); }
+  .site-footer a { color: var(--c-ochre); }
+  .footer-inner {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+  .footer-name { font-family: var(--font-display); font-weight: 800; font-size: var(--step-1); }
+  .footer-license { color: var(--c-on-teal-soft); font-size: var(--step--1); }
+  .footer-area ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+    margin-block-start: var(--space-xs);
+  }
+  .footer-area li { color: var(--c-on-teal-soft); }
+  .footer-copy {
+    margin-block-start: var(--space-xl);
+    padding-top: var(--space-m);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--c-on-teal-soft);
+    font-size: var(--step--1);
+  }
+
+  /* ------- Hero ------- */
+  .hero { position: relative; overflow: clip; }
+  .hero-inner {
+    display: grid;
+    gap: var(--space-xl);
+    align-items: center;
+    padding-block: var(--space-2xl);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 52rem) {
+    .hero-inner { grid-template-columns: 1.05fr 1fr; }
+  }
+  .hero h1 { font-size: var(--step-5); }
+  .hero-lead { font-size: var(--step-1); color: var(--c-ink-soft); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-s); align-items: center; }
+  .hero-trust { font-size: var(--step--1); color: var(--c-ink-soft); }
+  .hero-media {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--c-line);
+  }
+  .hero-media img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 3; }
+}
+
+/* ------------------------------------------------------------ utilities - */
+@layer utilities {
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0);
+    white-space: nowrap; border: 0;
+  }
+  .eyebrow-gap > * + * { margin-block-start: var(--space-s); }
+}
+
+/* --------------------------------------------------------------- motion - */
+@layer motion {
+  /* Scroll reveal — visible by default; only armed when JS + motion allowed */
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+    will-change: opacity, transform;
+  }
+  html.js [data-reveal].is-in { opacity: 1; transform: none; }
+
+  /* Stagger children within a group ~80ms apart */
+  html.js .reveal-stagger > [data-reveal]:nth-child(2) { transition-delay: 80ms; }
+  html.js .reveal-stagger > [data-reveal]:nth-child(3) { transition-delay: 160ms; }
+  html.js .reveal-stagger > [data-reveal]:nth-child(4) { transition-delay: 240ms; }
+  html.js .reveal-stagger > [data-reveal]:nth-child(5) { transition-delay: 320ms; }
+  html.js .reveal-stagger > [data-reveal]:nth-child(6) { transition-delay: 400ms; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* The signature: a single roller stroke sweeps across the hero, revealing
+       the photo + headline with the ochre cut line as its leading edge. */
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      background: var(--c-teal);
+      border-inline-end: var(--cut) solid var(--c-ochre);
+      transform: translateX(0);
+      pointer-events: none;
+      animation: roller-sweep var(--dur-roller) var(--ease-out) forwards;
+    }
+    .hero-inner { animation: fade-rise 600ms var(--ease-out) 450ms both; }
+
+    .card:hover { transform: translateY(-3px); }
+    .card:hover::before { transform: scaleY(1); }
+  }
+
+  @keyframes roller-sweep { to { transform: translateX(102%); } }
+  @keyframes fade-rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* Motion off: everything visible and still, fully usable */
+  @media (prefers-reduced-motion: reduce) {
+    html.js [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+}

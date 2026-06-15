@@ -1,28 +1,88 @@
 ---
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { BUSINESS } from "../consts";
+import { BUSINESS, PAINT_BRANDS } from "../consts";
 import hero from "../assets/photos/hero.png";
+
+// PLACEHOLDER copy — design-system showcase only. Real Home content is Phase 6 step 3.
+const services = [
+  { title: "Interior painting", blurb: "Walls, trim, ceilings, doors — clean cut lines and tidy work, room by room." },
+  { title: "Exterior painting", blurb: "Prep, prime, and finish that stands up to Connecticut winters." },
+  { title: "Cabinets & decks", blurb: "Cabinet refinishing and deck staining that brings tired surfaces back." },
+];
 ---
 
-<!-- PLACEHOLDER: skeleton home. Real content + design land in later phases. -->
 <BaseLayout title="" description={BUSINESS.tagline}>
-  <section>
-    <h1>{BUSINESS.name}</h1>
-    <p>{BUSINESS.tagline}</p>
-    <p><a href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a></p>
+  {/* ---------- Hero ---------- */}
+  <section class="hero">
+    <div class="hero-inner container">
+      <div class="stack-l">
+        <span class="chip">Central Connecticut</span>
+        <h1>Painting done right, the first time.</h1>
+        <p class="hero-lead">
+          {BUSINESS.name} has finished homes and businesses across Central
+          Connecticut for over 20 years — clean lines, honest quotes, no surprises.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn--primary" href="/contact/">Get a free quote</a>
+          <a class="btn btn--secondary" href={BUSINESS.phoneHref}
+            >Call {BUSINESS.phone}</a
+          >
+        </div>
+        <p class="hero-trust">
+          Licensed &amp; insured · {BUSINESS.licenseLabel} #{BUSINESS.licenseNumber} ·
+          {PAINT_BRANDS.join(" & ")} paints
+        </p>
+      </div>
 
-    {/*
-      Proves the astro:assets pipeline: this PNG is resized + served as a
-      modern format at build time. widths/sizes are illustrative for the
-      skeleton; the real hero is built in the design pass.
-    */}
-    <Image
-      src={hero}
-      alt="Colonial home in Central Connecticut after refinishing by Jim's Quality Painting"
-      widths={[480, 800, 1200]}
-      sizes="(max-width: 800px) 100vw, 800px"
-      loading="eager"
-    />
+      <div class="hero-media">
+        <Image
+          src={hero}
+          alt="Colonial home in Central Connecticut after refinishing by Jim's Quality Painting"
+          widths={[480, 800, 1200]}
+          sizes="(max-width: 52rem) 100vw, 600px"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* ---------- Services preview (fan-deck cards) ---------- */}
+  <section class="section section--tint">
+    <div class="container stack-l">
+      <div class="eyebrow-gap" data-reveal>
+        <span class="chip">What we do</span>
+        <h2>A painter for the whole house.</h2>
+      </div>
+      <div class="card-grid reveal-stagger">
+        {
+          services.map((s) => (
+            <article class="card stack" data-reveal>
+              <h3>{s.title}</h3>
+              <p>{s.blurb}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ---------- Cut-line / proof band ---------- */}
+  <section class="section section--teal">
+    <div class="container stack-l">
+      <div class="eyebrow-gap" data-reveal>
+        <span class="chip">The cut line</span>
+        <h2>Where one color meets the next, we keep it crisp.</h2>
+        <p>
+          That edge is the whole job. Get a free, no-pressure quote and we'll
+          walk the space with you.
+        </p>
+      </div>
+      <hr class="cut-line" />
+      <div class="hero-actions" data-reveal>
+        <a class="btn btn--on-teal" href="/contact/">Get a free quote</a>
+        <a class="btn btn--ghost" href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a>
+      </div>
+    </div>
   </section>
 </BaseLayout>

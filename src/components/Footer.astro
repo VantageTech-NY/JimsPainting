@@ -1,12 +1,12 @@
 ---
-import { BUSINESS, SERVICE_TOWNS } from "../consts";
+import { BUSINESS, SERVICE_TOWNS, PAINT_BRANDS } from "../consts";
 
 const year = new Date().getFullYear();
 ---
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
+<footer class="site-footer">
+  <div class="footer-inner container">
+    <div class="footer-brand stack">
       <p class="footer-name">{BUSINESS.name}</p>
       <p>{BUSINESS.tagline}</p>
       <p>
@@ -14,6 +14,9 @@ const year = new Date().getFullYear();
       </p>
       <p class="footer-license">
         Licensed &amp; insured — {BUSINESS.licenseLabel} #{BUSINESS.licenseNumber}
+      </p>
+      <p class="footer-license">
+        We use {PAINT_BRANDS.join(" & ")} paints.
       </p>
     </div>
 
@@ -26,5 +29,7 @@ const year = new Date().getFullYear();
     </div>
   </div>
 
-  <p class="footer-copy">© {year} {BUSINESS.name}. All rights reserved.</p>
+  <div class="container">
+    <p class="footer-copy">© {year} {BUSINESS.name}. All rights reserved.</p>
+  </div>
 </footer>
