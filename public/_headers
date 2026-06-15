@@ -5,7 +5,7 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   X-Robots-Tag: noindex, nofollow
   Permissions-Policy: geolocation=(), microphone=(), camera=()
-  Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; form-action 'self' https://formsubmit.co; frame-ancestors 'none'; base-uri 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; object-src 'none'; form-action 'self' https://formsubmit.co; frame-ancestors 'none'; base-uri 'self'
 
 # Astro emits content-hashed assets under /_astro/ — safe to cache forever.
 /_astro/*

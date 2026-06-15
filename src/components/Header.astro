@@ -1,5 +1,6 @@
 ---
 import { BUSINESS, NAV } from "../consts";
+import PhoneIcon from "./PhoneIcon.astro";
 
 // Highlight the current top-level section.
 const path = Astro.url.pathname;
@@ -41,7 +42,7 @@ const isActive = (href: string) =>
 
     {/* Phone is visible on every page — calls convert best for this audience. */}
     <a class="header-phone" href={BUSINESS.phoneHref}>
-      <span aria-hidden="true">☎</span> {BUSINESS.phone}
+      <PhoneIcon /> {BUSINESS.phone}
     </a>
   </div>
 </header>

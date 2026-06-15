@@ -1,4 +1,0 @@
-# DEMO / STAGING — keep this host out of search and AI indexes (plan2.md 0.2).
-# Reverted at cutover (Phase 7): permissive rules + AI-crawler allows + sitemap.
-User-agent: *
-Disallow: /

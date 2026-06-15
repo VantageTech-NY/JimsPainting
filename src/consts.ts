@@ -14,6 +14,9 @@ export const BUSINESS = {
   shortName: "Jim's Quality Painting",
   phone: "(860) 977-9536",
   phoneHref: "tel:+18609779536",
+  phoneE164: "+18609779536", // for schema/telephone
+  region: "CT",
+  country: "US",
   // HIC registration provided by owner (plan2.md "Updated information").
   licenseLabel: "CT HIC",
   licenseNumber: "0635666",

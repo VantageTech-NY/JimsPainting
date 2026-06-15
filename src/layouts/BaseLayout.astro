@@ -1,16 +1,18 @@
 ---
+import { getImage } from "astro:assets";
 import "@fontsource-variable/bricolage-grotesque";
 import "@fontsource-variable/hanken-grotesk";
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { BUSINESS, IS_DEMO } from "../consts";
+import shareSource from "../assets/photos/hero.png";
+import { BUSINESS, IS_DEMO, SERVICES, SERVICE_TOWNS } from "../consts";
 
 interface Props {
   /** Page <title>; the business name is appended automatically. */
   title: string;
   description?: string;
-  /** Path-relative or absolute OG image; defaults handled in a later phase. */
+  /** Override the default share/OG image with an absolute or site-relative URL. */
   ogImage?: string;
 }
 
@@ -21,7 +23,54 @@ const fullTitle = title ? `${title} | ${BUSINESS.name}` : BUSINESS.name;
 // Canonical + OG URLs are derived from Astro.site (driven by SITE_URL), so the
 // one-variable demo->prod flip carries through here (plan2.md 1.2).
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).href : undefined;
+
+// Default share image — a 1200x630 crop of the hero, generated at build time.
+const share = await getImage({
+  src: shareSource,
+  width: 1200,
+  height: 630,
+  format: "jpg",
+});
+const ogImageUrl = ogImage
+  ? new URL(ogImage, Astro.site).href
+  : new URL(share.src, Astro.site).href;
+
+// Site-wide LocalBusiness (HousePainter) schema (plan2.md 3.1 / 4). Inline
+// JSON-LD is data, not executable, so it is allowed under CSP script-src 'self'.
+// Per-page Service/FAQPage schema is injected separately via the head slot.
+// Email + sameAs are intentionally omitted pending owner sign-off (plan2.md 5).
+const businessSchema = {
+  "@context": "https://schema.org",
+  "@type": "HousePainter",
+  "@id": `${Astro.site}#business`,
+  name: BUSINESS.name,
+  description: BUSINESS.tagline,
+  url: Astro.site?.href,
+  telephone: BUSINESS.phoneE164,
+  image: ogImageUrl,
+  address: {
+    "@type": "PostalAddress",
+    addressRegion: BUSINESS.region,
+    addressCountry: BUSINESS.country,
+  },
+  areaServed: SERVICE_TOWNS.map((name) => ({
+    "@type": "City",
+    name: `${name}, ${BUSINESS.region}`,
+  })),
+  hasMap: BUSINESS.mapsUrl,
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Painting services",
+    itemListElement: SERVICES.map((s) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: s.title,
+        url: new URL(`/services/${s.slug}/`, Astro.site).href,
+      },
+    })),
+  },
+};
 ---
 
 <!doctype html>
@@ -42,16 +91,22 @@ const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).href : undefined;
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    {/*
-      JSON-LD (HousePainter / Service / FAQPage) is wired in Phase 6 step 4.
-      A named slot reserves the spot so pages can inject per-page schema.
-    */}
+    {/* Site-wide business schema. Per-page Service/FAQPage schema is injected
+        by pages through the head slot below. */}
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(businessSchema)}
+    />
     <slot name="head" />
   </head>
   <body>
