@@ -5,6 +5,10 @@ node_modules
 dist/
 .astro/
 
+# wrangler / cloudflare local state
+.wrangler/
+.dev.vars
+
 # editor / OS
 .DS_Store
 

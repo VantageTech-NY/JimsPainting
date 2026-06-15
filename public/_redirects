@@ -1,2 +1,0 @@
-# www -> apex (prod). Inert on the demo host; active after cutover (Phase 7).
-https://www.jimspaint.com/*  https://jimspaint.com/:splat  301

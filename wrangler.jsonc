@@ -1,0 +1,12 @@
+{
+  // Static-assets-only deploy for the Astro static build (no Worker script,
+  // no SSR adapter). Committing this stops `wrangler deploy` from auto-running
+  // `astro add cloudflare`, which was flipping the site into server mode.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jimspainting-v2",
+  "compatibility_date": "2026-06-15",
+  "assets": {
+    // `npm run build` (astro build, static) emits the site here.
+    "directory": "./dist"
+  }
+}
