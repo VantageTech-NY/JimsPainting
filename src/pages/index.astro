@@ -1,0 +1,28 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { BUSINESS } from "../consts";
+import hero from "../assets/photos/hero.png";
+---
+
+<!-- PLACEHOLDER: skeleton home. Real content + design land in later phases. -->
+<BaseLayout title="" description={BUSINESS.tagline}>
+  <section>
+    <h1>{BUSINESS.name}</h1>
+    <p>{BUSINESS.tagline}</p>
+    <p><a href={BUSINESS.phoneHref}>Call {BUSINESS.phone}</a></p>
+
+    {/*
+      Proves the astro:assets pipeline: this PNG is resized + served as a
+      modern format at build time. widths/sizes are illustrative for the
+      skeleton; the real hero is built in the design pass.
+    */}
+    <Image
+      src={hero}
+      alt="Colonial home in Central Connecticut after refinishing by Jim's Quality Painting"
+      widths={[480, 800, 1200]}
+      sizes="(max-width: 800px) 100vw, 800px"
+      loading="eager"
+    />
+  </section>
+</BaseLayout>

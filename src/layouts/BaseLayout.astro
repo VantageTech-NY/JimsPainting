@@ -1,0 +1,59 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { BUSINESS, IS_DEMO } from "../consts";
+
+interface Props {
+  /** Page <title>; the business name is appended automatically. */
+  title: string;
+  description?: string;
+  /** Path-relative or absolute OG image; defaults handled in a later phase. */
+  ogImage?: string;
+}
+
+const { title, description = BUSINESS.tagline, ogImage } = Astro.props;
+
+const fullTitle = title ? `${title} | ${BUSINESS.name}` : BUSINESS.name;
+
+// Canonical + OG URLs are derived from Astro.site (driven by SITE_URL), so the
+// one-variable demo->prod flip carries through here (plan2.md 1.2).
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).href : undefined;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    {/* Demo gating — keep staging out of search/AI indexes (plan2.md 0.2). */}
+    {IS_DEMO && <meta name="robots" content="noindex, nofollow" />}
+
+    {/* Open Graph / social */}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    {/*
+      JSON-LD (HousePainter / Service / FAQPage) is wired in Phase 6 step 4.
+      A named slot reserves the spot so pages can inject per-page schema.
+    */}
+    <slot name="head" />
+  </head>
+  <body>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,30 @@
+---
+import { BUSINESS, SERVICE_TOWNS } from "../consts";
+
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <p class="footer-name">{BUSINESS.name}</p>
+      <p>{BUSINESS.tagline}</p>
+      <p>
+        <a href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>
+      </p>
+      <p class="footer-license">
+        Licensed &amp; insured — {BUSINESS.licenseLabel} #{BUSINESS.licenseNumber}
+      </p>
+    </div>
+
+    <div class="footer-area">
+      <h2>Service area</h2>
+      <p>Central Connecticut, including:</p>
+      <ul>
+        {SERVICE_TOWNS.map((town) => <li>{town}</li>)}
+      </ul>
+    </div>
+  </div>
+
+  <p class="footer-copy">© {year} {BUSINESS.name}. All rights reserved.</p>
+</footer>

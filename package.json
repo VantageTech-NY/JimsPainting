@@ -1,0 +1,19 @@
+{
+  "name": "jimspaint-v2",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Jim's Quality Painting — site 2.0 (Astro). Staging on demo.jimspaint.com.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.0.0"
+  }
+}

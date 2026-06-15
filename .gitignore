@@ -1,4 +1,19 @@
+# dependencies
 node_modules
+
+# build output
+dist/
+.astro/
+
+# editor / OS
 .DS_Store
-plan.md
-assets/img/originals/
+
+# env
+.env
+.env.production
+
+# planning docs (kept local)
+plan*
+
+# full-resolution photo originals (source for src/assets/photos; not deployed)
+asests_v2/

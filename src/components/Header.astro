@@ -1,0 +1,33 @@
+---
+import { BUSINESS, NAV } from "../consts";
+
+// Highlight the current top-level section.
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
+---
+
+<header>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="header-inner">
+    <a class="brand" href="/">{BUSINESS.name}</a>
+
+    {/* No-JS mobile nav: a native <details> disclosure. Design pass refines it. */}
+    <nav aria-label="Primary">
+      <ul>
+        {
+          NAV.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    {/* Phone is visible on every page — calls convert best for this audience. */}
+    <a class="header-phone" href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>
+  </div>
+</header>
