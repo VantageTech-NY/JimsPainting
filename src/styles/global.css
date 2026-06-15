@@ -734,6 +734,39 @@
   .contact-aside .chip { width: fit-content; }
   .contact-line { display: flex; align-items: center; gap: 0.5rem; }
   .contact-line svg { color: var(--c-ochre); font-size: 1.1em; flex: 0 0 auto; }
+
+  /* ------- FAQ accordion (native <details>, no JS) ------- */
+  .faq-list { display: grid; gap: var(--space-s); }
+  .faq-item {
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius);
+  }
+  .faq-item summary {
+    cursor: pointer;
+    list-style: none;
+    padding: var(--space-m);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step-1);
+    color: var(--c-teal);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: "+";
+    color: var(--c-ochre);
+    font-size: 1.4em;
+    line-height: 1;
+    flex: 0 0 auto;
+  }
+  .faq-item[open] summary::after { content: "\2212"; }
+  .faq-item summary:focus-visible { outline: 3px solid var(--c-focus); outline-offset: 2px; }
+  .faq-answer { padding: 0 var(--space-m) var(--space-m); }
+  .faq-answer p { color: var(--c-ink-soft); }
 }
 
 /* ------------------------------------------------------------ utilities - */

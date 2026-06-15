@@ -7,6 +7,8 @@
   "compatibility_date": "2026-06-15",
   "assets": {
     // `npm run build` (astro build, static) emits the site here.
-    "directory": "./dist"
+    "directory": "./dist",
+    // Serve the branded dist/404.html on unmatched routes.
+    "not_found_handling": "404-page"
   }
 }

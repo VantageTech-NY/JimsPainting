@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { BUSINESS, NAV } from "../consts";
+
+const links = NAV.filter((n) => n.href !== "/");
+---
+
+<BaseLayout
+  title="Page not found"
+  description="That page couldn't be found."
+  noindex={true}
+>
+  <section class="section">
+    <div class="container container--narrow stack-l">
+      <span class="chip">404</span>
+      <h1>That page took a vacation.</h1>
+      <p class="hero-lead">
+        We couldn't find the page you were after. It may have moved, or the link
+        might be off. Here's where to go next:
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href="/">Back to home</a>
+        <a class="btn btn--secondary" href={BUSINESS.phoneHref}
+          >Call {BUSINESS.phone}</a
+        >
+      </div>
+      <div class="pill-links">
+        {links.map((n) => <a href={n.href}>{n.label}</a>)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
