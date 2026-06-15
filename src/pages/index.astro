@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { BUSINESS, PAINT_BRANDS, SERVICES } from "../consts";
+import { BUSINESS, PAINT_BRANDS, SERVICES, TESTIMONIALS } from "../consts";
 import hero from "../assets/photos/hero.png";
 
 // PLACEHOLDER layout — design-system showcase. Real Home content is Phase 6 step 3.
@@ -59,6 +59,31 @@ import hero from "../assets/photos/hero.png";
           ))
         }
       </div>
+    </div>
+  </section>
+
+  {/* ---------- Testimonials (real Google reviews) ---------- */}
+  <section class="section">
+    <div class="container stack-l">
+      <div class="eyebrow-gap" data-reveal>
+        <span class="chip">What clients say</span>
+        <h2>Work that speaks for itself.</h2>
+      </div>
+      <div class="quote-grid reveal-stagger">
+        {
+          TESTIMONIALS.map((t) => (
+            <figure class="quote-card" data-reveal>
+              <blockquote>{t.quote}</blockquote>
+              <cite>— {t.author}</cite>
+            </figure>
+          ))
+        }
+      </div>
+      <p data-reveal>
+        <a href={BUSINESS.reviewsUrl} rel="noopener" target="_blank">
+          Read more on Google →
+        </a>
+      </p>
     </div>
   </section>
 

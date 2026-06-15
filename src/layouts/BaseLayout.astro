@@ -38,7 +38,7 @@ const ogImageUrl = ogImage
 // Site-wide LocalBusiness (HousePainter) schema (plan2.md 3.1 / 4). Inline
 // JSON-LD is data, not executable, so it is allowed under CSP script-src 'self'.
 // Per-page Service/FAQPage schema is injected separately via the head slot.
-// Email + sameAs are intentionally omitted pending owner sign-off (plan2.md 5).
+// Email is owner-approved; sameAs (socials) omitted until the owner has any.
 const businessSchema = {
   "@context": "https://schema.org",
   "@type": "HousePainter",
@@ -47,6 +47,7 @@ const businessSchema = {
   description: BUSINESS.tagline,
   url: Astro.site?.href,
   telephone: BUSINESS.phoneE164,
+  email: BUSINESS.email,
   image: ogImageUrl,
   address: {
     "@type": "PostalAddress",
