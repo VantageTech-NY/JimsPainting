@@ -479,7 +479,15 @@
     isolation: isolate;
     display: grid;
     align-items: center;
+    /* Mobile: consistent tall band (cover crop) so the text has room */
     min-height: clamp(30rem, 72vh, 46rem);
+  }
+  /* Desktop/tablet: show the whole photo, uncropped (matches its 4:3 ratio) */
+  @media (min-width: 52rem) {
+    .hero {
+      min-height: 0;
+      aspect-ratio: 1452 / 1083;
+    }
   }
   /* Clear the fixed, overlaid header on the home hero */
   .hero-page .hero { padding-top: var(--header-h); }
