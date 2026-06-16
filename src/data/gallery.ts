@@ -28,10 +28,8 @@ import deckBefore from "../assets/photos/deck-before.jpg";
 import deckAfter from "../assets/photos/deck-after.jpg";
 import bbBefore from "../assets/photos/board-batten-before.jpg";
 import bbAfter from "../assets/photos/board-batten-after.jpg";
-import woodCeilBefore from "../assets/photos/wood-ceiling-before.jpg";
-import woodCeilAfter from "../assets/photos/wood-ceiling-after.jpg";
-import bathCeilBefore from "../assets/photos/bathroom-ceiling-before.jpg";
-import bathCeilAfter from "../assets/photos/bathroom-ceiling-after.jpg";
+// wood-ceiling / bathroom-ceiling pairs intentionally omitted — finish carpentry
+// the owner isn't offering as a priced service (kept in repo for future use).
 
 export type GalleryCategory = "exterior" | "interior" | "cabinets";
 
@@ -44,6 +42,8 @@ export interface GalleryPair {
 
 export const GALLERY: GalleryPair[] = [
   { before: largeHomeBefore, after: largeHomeAfter, alt: "Full exterior home repaint", cat: "exterior" },
+  // Featured: board & batten accent wall
+  { before: bbBefore, after: bbAfter, alt: "Board & batten accent wall, built and finished", cat: "interior" },
   { before: vicFrontBefore, after: vicFrontAfter, alt: "Victorian home repainted in period colors (front)", cat: "exterior" },
   { before: vicSideBefore, after: vicSideAfter, alt: "Victorian home repainted in period colors (side)", cat: "exterior" },
   { before: sidingBefore, after: sidingAfter, alt: "Home siding repainted", cat: "exterior" },
@@ -55,9 +55,6 @@ export const GALLERY: GalleryPair[] = [
   { before: cabCloseBefore, after: cabCloseAfter, alt: "Kitchen cabinets refinished (detail)", cat: "cabinets" },
   { before: basementBefore, after: basementAfter, alt: "Basement finished and painted", cat: "interior" },
   { before: stairsBefore, after: stairsAfter, alt: "Interior staircase refinished", cat: "interior" },
-  { before: bbBefore, after: bbAfter, alt: "Board & batten accent wall, built and finished", cat: "interior" },
-  { before: woodCeilBefore, after: woodCeilAfter, alt: "Three-season room wood-plank ceiling, installed and finished", cat: "interior" },
-  { before: bathCeilBefore, after: bathCeilAfter, alt: "Bathroom wood-plank ceiling replacing a water-damaged ceiling", cat: "interior" },
 ];
 
 export const GALLERY_FILTERS = [
