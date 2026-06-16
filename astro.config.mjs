@@ -11,8 +11,12 @@ const IS_DEMO = SITE_URL !== "https://jimspaint.com";
 export default defineConfig({
   site: SITE_URL,
   // No sitemap on the demo host — keep staging out of search (plan2.md 0.2).
-  // Generated only for prod; the prod robots.txt advertises it.
-  integrations: IS_DEMO ? [] : [sitemap()],
+  // Generated only for prod; the prod robots.txt advertises it. Exclude the
+  // noindex /thanks/ page so it isn't flagged in Search Console (/404 is
+  // auto-excluded by the integration).
+  integrations: IS_DEMO
+    ? []
+    : [sitemap({ filter: (page) => !page.endsWith("/thanks/") })],
   // Static output (default). Zero client JS unless a page opts in.
   build: {
     // Emit per-page directories (/services/interior/) — clean URLs for the
