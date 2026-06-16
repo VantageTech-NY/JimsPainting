@@ -24,6 +24,14 @@ import vicFrontBefore from "../assets/photos/victorian-home-front-before.jpeg";
 import vicFrontAfter from "../assets/photos/victorian-home-front-after.jpeg";
 import vicSideBefore from "../assets/photos/victorian-home-side-before.jpeg";
 import vicSideAfter from "../assets/photos/victorian-home-side-after.jpeg";
+import deckBefore from "../assets/photos/deck-before.jpg";
+import deckAfter from "../assets/photos/deck-after.jpg";
+import bbBefore from "../assets/photos/board-batten-before.jpg";
+import bbAfter from "../assets/photos/board-batten-after.jpg";
+import woodCeilBefore from "../assets/photos/wood-ceiling-before.jpg";
+import woodCeilAfter from "../assets/photos/wood-ceiling-after.jpg";
+import bathCeilBefore from "../assets/photos/bathroom-ceiling-before.jpg";
+import bathCeilAfter from "../assets/photos/bathroom-ceiling-after.jpg";
 
 export type GalleryCategory = "exterior" | "interior" | "cabinets";
 
@@ -42,10 +50,14 @@ export const GALLERY: GalleryPair[] = [
   { before: porchBefore, after: porchAfter, alt: "Front porch refinished", cat: "exterior" },
   { before: barnFrontBefore, after: barnFrontAfter, alt: "Red barn front, prepped and painted", cat: "exterior" },
   { before: barnBackBefore, after: barnBackAfter, alt: "Red barn back, prepped and painted", cat: "exterior" },
+  { before: deckBefore, after: deckAfter, alt: "Deck cleaned and re-stained", cat: "exterior" },
   { before: cabWideBefore, after: cabWideAfter, alt: "Kitchen cabinets refinished", cat: "cabinets" },
   { before: cabCloseBefore, after: cabCloseAfter, alt: "Kitchen cabinets refinished (detail)", cat: "cabinets" },
   { before: basementBefore, after: basementAfter, alt: "Basement finished and painted", cat: "interior" },
   { before: stairsBefore, after: stairsAfter, alt: "Interior staircase refinished", cat: "interior" },
+  { before: bbBefore, after: bbAfter, alt: "Board & batten accent wall, built and finished", cat: "interior" },
+  { before: woodCeilBefore, after: woodCeilAfter, alt: "Three-season room wood-plank ceiling, installed and finished", cat: "interior" },
+  { before: bathCeilBefore, after: bathCeilAfter, alt: "Bathroom wood-plank ceiling replacing a water-damaged ceiling", cat: "interior" },
 ];
 
 export const GALLERY_FILTERS = [

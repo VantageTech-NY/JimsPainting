@@ -14,6 +14,8 @@ import barnFrontAfter from "../assets/photos/barn-front-after.jpeg";
 import cabinetsWideBefore from "../assets/photos/kitchen-cabinets-wide-before.jpg";
 import cabinetsWideAfter from "../assets/photos/kitchen-cabinets-wide-after.jpg";
 import cabinetsCloseAfter from "../assets/photos/kitchen-cabinets-close-after.jpg";
+import deckAfter from "../assets/photos/deck-after.jpg";
+import boardBattenAfter from "../assets/photos/board-batten-after.jpg";
 
 export interface ServicePhoto {
   img: ImageMetadata;
@@ -116,7 +118,9 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Decking, railings, steps, and fences",
       "Protection of nearby siding and landscaping",
     ],
-    photos: [],
+    photos: [
+      { img: deckAfter, alt: "A deck after cleaning and re-staining", caption: "Cleaned & re-stained" },
+    ],
   },
 
   "board-and-batten": {
@@ -135,6 +139,8 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Finish paint in your chosen color",
       "Interior accent walls or exterior siding",
     ],
-    photos: [],
+    photos: [
+      { img: boardBattenAfter, alt: "A finished board & batten accent wall painted dark", caption: "Finished accent wall" },
+    ],
   },
 };
